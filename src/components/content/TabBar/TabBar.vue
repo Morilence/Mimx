@@ -7,7 +7,7 @@
                 <p slot="item-text">Chat</p>
             </tab-bar-item>
             <div class="tabBarBtn">
-                <img src="@/assets/img/TabBar/create_active.svg" alt="">
+                <img :src="this.$store.state.createUrl" alt="" @click="switchGloveBox">
             </div>
             <tab-bar-item path="/explore">
                 <img slot="item-icon" src="@/assets/img/TabBar/explore.svg" alt="">
@@ -27,6 +27,21 @@ export default {
     components: {
         TabBarContainer,
         TabBarItem
+    },
+    data () {
+        return {
+        }
+    },
+    methods: {
+        switchGloveBox () {
+            if (this.$store.state.isGloveBoxDisplay) {
+                this.$store.commit('setIsGloveBoxDisplay', false);
+                this.$store.commit('setCreateUrl', require('@/assets/img/TabBar/create.svg'));
+            } else {
+                this.$store.commit('setIsGloveBoxDisplay', true);
+                this.$store.commit('setCreateUrl', require('@/assets/img/TabBar/create_active.svg'));
+            }
+        }
     }
 }
 </script>

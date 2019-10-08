@@ -16,19 +16,22 @@
         </div>
         <float-bar></float-bar>
 		<tab-bar></tab-bar>
+        <glove-box></glove-box>
     </div>
 </template>
 
 <script>
 import TabBar from '@/components/content/TabBar/TabBar';
 import FloatBar from '@/components/content/FloatBar/FloatBar';
+import GloveBox from '@/components/content/GloveBox/GloveBox';
 import MessageItem from './MessageItem';
 export default {
     name: 'Chat',
     components: {
         MessageItem,
         TabBar,
-		FloatBar
+        FloatBar,
+        GloveBox
     },
     data () {
         return {

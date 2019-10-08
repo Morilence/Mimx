@@ -3,6 +3,8 @@
         <input type="text" placeholder="Username" maxlength="25" autocomplete="off" v-model="enteredUsername" @keyup.enter="login">
         <input type="password" name="" placeholder="Password" maxlength="25" autocomplete="off" v-model="enteredPassword" @keyup.enter="login">
         <input type="button" value="login" @click="login">
+        <!-- 专用于开发时免登陆进入 -->
+        <!-- <button @click="skipin">skip in (4 dev)</button> -->
         <hr>
         <router-link to="register">立即注册</router-link>      
     </form>
@@ -42,7 +44,19 @@ export default {
             } else {
                 alert('Input cannot be empty!');
             }
-        }
+        },
+        // skipin () {
+        //     let _this = this;
+        //     if (true) {
+        //         // 将该用户的基本信息全部存储到state中
+        //         if (localStorage.getItem('isLogin') === null) {
+        //             localStorage.setItem('isLogin', true);
+        //         }
+        //         localStorage.setItem('isLogin', true);
+        //         _this.$store.commit('setIsLogin', localStorage.getItem('isLogin'));
+        //         _this.$router.replace('/chat');
+        //     }
+        // }
     },
 
 }
@@ -59,7 +73,7 @@ export default {
     width: 80%;
 }
 
-input {
+input,button {
     position: relative;
     left: 50%;
     transform: translateX(-50%);
@@ -114,7 +128,7 @@ input[type="password"] {
     font-weight: bold;
 }
 
-input[type="button"] {
+input[type="button"],button {
     padding: 10px;
     background-color: rgba(255, 126, 103, 1);
     outline: none;

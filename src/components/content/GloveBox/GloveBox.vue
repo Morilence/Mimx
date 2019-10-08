@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="gloveBox" v-show="this.$store.state.isGloveBoxDisplay">
         <glove-box-container></glove-box-container>
     </div>
 </template>
@@ -23,5 +23,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

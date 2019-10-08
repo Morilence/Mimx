@@ -10,12 +10,14 @@
         </div>
         <float-bar></float-bar>
 		<tab-bar></tab-bar>
+        <glove-box></glove-box>
     </div>
 </template>
 
 <script>
 import TabBar from '@/components/content/TabBar/TabBar';
 import FloatBar from '@/components/content/FloatBar/FloatBar';
+import GloveBox from '@/components/content/GloveBox/GloveBox';
 import NavBar from './NavBar';
 import PostsItem from './PostsItem';
 export default {
@@ -24,7 +26,8 @@ export default {
         NavBar,
         PostsItem,
         TabBar,
-		FloatBar
+        FloatBar,
+        GloveBox
     },
     data () {
         return {
