@@ -5,11 +5,9 @@ const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
 const static = require('koa-static');
 const session = require('koa-session');
+// const { historyApiFallback } = require('koa2-connect-history-api-fallback');
 
 const DB = require('./module/db');
-// const chat = require('./routes/chat');
-// const explore = require('./routes/explore');
-// const profile = require('./routes/profile');
 
 const app = new Koa();
 const router = new Router();
@@ -31,7 +29,9 @@ app.use(bodyParser());
 // 配置静态资源服务中间件
 app.use(static('./public'));
 app.use(static('./dist'));
-
+// app.use(historyApiFallback({
+//     index: '/dist/index.html'
+// }));
 
 // 配置路由
 router

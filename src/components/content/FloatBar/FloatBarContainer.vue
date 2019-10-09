@@ -43,7 +43,7 @@ export default {
         if (localStorage.getItem('isLogin') === null) {
             localStorage.setItem('isLogin', false);
         }
-        this.$store.state.isLogin = localStorage.getItem('isLogin');
+        this.$store.commit('setIsLogin', localStorage.getItem('isLogin'));
         if (this.$store.state.isLogin == 'true') {
             this.username = this.$store.state.userInfo.username;
             this.level = this.$store.state.userInfo.level;

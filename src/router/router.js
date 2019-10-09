@@ -11,6 +11,8 @@ const Profile = () => import('@/views/Profile/Profile');
 Vue.use(Router)
 
 export default new Router({
+	mode: 'hash',
+	linkActiveClass: 'active',
 	routes: [
 		{
 			path: '/',
@@ -41,21 +43,22 @@ export default new Router({
 			path: '/chat',
 			component: Chat,
 			meta: {
-				requireAuth: true
+				// 标明需要requireAuth属性为true才可进入此路由（用于限制登陆）
+				requireAuth: true,
 			}
 		},
 		{
 			path: '/explore',
 			component: Explore,
 			meta: {
-				requireAuth: true
+				requireAuth: true,
 			}
 		},
 		{
 			path: '/profile',
 			component: Profile,
 			meta: {
-				requireAuth: true
+				requireAuth: true,
 			}
 		}
 	]

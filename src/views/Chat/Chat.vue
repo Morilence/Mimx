@@ -10,13 +10,14 @@
             <img src="@/assets/img/common/search_c.svg" alt="">
         </div>
         <div id="messagePanel">
-            <message-item v-for="(item) in list" :key="item">
-                
-            </message-item>
+            <message-item v-for="(item) in list" :key="item"></message-item>
+        </div>
+        <div id="endHint">
+            已经到底啦(￣▽￣)""
         </div>
         <float-bar></float-bar>
-		<tab-bar></tab-bar>
         <glove-box></glove-box>
+		<tab-bar></tab-bar>
     </div>
 </template>
 
@@ -37,6 +38,9 @@ export default {
         return {
             list: [1, 2, 3, 4, 5, 6, 7, 8, 9]
         }
+    },
+    methods: {
+        
     },
     created () {
 
@@ -162,5 +166,11 @@ export default {
     width: 95%;
     padding-top: 5px;
     padding-bottom: 5px;
+}
+
+#endHint {
+    padding-bottom: 80px;
+    text-align: center;
+    color: #909399;
 }
 </style>

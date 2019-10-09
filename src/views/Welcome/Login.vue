@@ -46,6 +46,8 @@ export default {
             }
         },
         // skipin () {
+        //     console.log("skipin called");
+            
         //     let _this = this;
         //     if (true) {
         //         // 将该用户的基本信息全部存储到state中
@@ -73,12 +75,31 @@ export default {
     width: 80%;
 }
 
-input,button {
+input {
     position: relative;
     left: 50%;
     transform: translateX(-50%);
 
     width: 80%;
+}
+
+/* 开发阶段的测试按钮 */
+button {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 50%;
+    margin-top: 30px;
+    padding: 10px;
+    background-color: rgba(255, 126, 103, 1);
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+
+    color: #fff;
+    font-weight: bold;
 }
 
 input:-webkit-autofill {
@@ -128,7 +149,7 @@ input[type="password"] {
     font-weight: bold;
 }
 
-input[type="button"],button {
+input[type="button"] {
     padding: 10px;
     background-color: rgba(255, 126, 103, 1);
     outline: none;

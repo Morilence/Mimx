@@ -6,6 +6,10 @@
     margin: 0;
 }
 
+html {
+    background-color: #fafafa;
+}
+
 ul,li { 
     padding:0;
     margin:0;

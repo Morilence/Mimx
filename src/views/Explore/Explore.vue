@@ -8,9 +8,12 @@
         <div id="postsPanel">
             <posts-item v-for="(item) in list" :key="item"></posts-item>
         </div>
+        <div id="endHint">
+            已经到底啦(￣▽￣)""
+        </div>
         <float-bar></float-bar>
-		<tab-bar></tab-bar>
         <glove-box></glove-box>
+		<tab-bar></tab-bar>
     </div>
 </template>
 
@@ -33,6 +36,9 @@ export default {
         return {
             list: [1, 2, 3, 4, 5]
         }
+    },
+    methods: {
+       
     },
     created () {
 
@@ -102,5 +108,11 @@ export default {
     width: 95%;
     margin-top: 5px;
     margin-bottom: 10px;
+}
+
+#endHint {
+    padding-bottom: 80px;
+    text-align: center;
+    color: #909399;
 }
 </style>

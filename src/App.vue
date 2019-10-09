@@ -1,9 +1,7 @@
 <template>
-	<div id="app">
-		<router-view></router-view>
-		<!-- <float-bar></float-bar>
-		<tab-bar></tab-bar> -->
-	</div>
+  <div id="app">
+    	<router-view></router-view>
+  </div>
 </template>
 
 <script>
@@ -14,21 +12,26 @@ export default {
 	},
 	data () {
 		return {
-
+			// 初始滚动高度
+			scroll: 0
 		}
 	},
 	methods: {
 		
 	},
+	watch:{
+	},
+	
 	created () {
 		this.$router.replace('/');
-	}
+	},
+	
 }
 </script>
 
 <style>
 @import url("./assets/css/base.css");
 #app {
-	background-color: #fafafa;
+  	background-color: #fafafa;
 }
 </style>

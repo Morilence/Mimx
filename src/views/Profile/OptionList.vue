@@ -1,23 +1,51 @@
 <template>
     <ul id="optionList">
         <li class="optionItem">
-            <p @click.stop="unfold($event)">个人信息</p>
+            <p @click.self="unfold($event)">
+                <img src="@/assets/img/profile/OptionList/basicInfo.svg" alt="">
+                个人信息
+            </p>
             <div></div>
         </li>
         <hr>
         <li class="optionItem">
-            <p @click.stop="unfold($event)">账号安全</p>
+            <p @click.self="unfold($event)">
+                <img src="@/assets/img/profile/OptionList/security.svg" alt="">
+                账号安全
+            </p>
             <div></div>
         </li>
         <hr>
         <li class="optionItem">
-            <p @click.stop="unfold($event)">设置</p>
+            <p @click.self="unfold($event)">
+                <img src="@/assets/img/profile/OptionList/setting.svg" alt="">
+                设置
+            </p>
             <div></div>
         </li>
         <hr>
         <li class="optionItem">
-            <p @click.stop="unfold($event)">关于</p>
-            <div></div>
+            <p @click.self="unfold($event)">
+                <img src="@/assets/img/profile/OptionList/about.svg" alt="">
+                关于
+            </p>
+            <div>
+                Version: 1.01 Beta/Preview <br>
+                Developer: Morilence<br>
+                Contact us(me): 1280659615@qq.com<br>
+                Product communication group: <span style="color: red">GUESS</span>
+            </div>
+        </li>
+        <hr>
+         <li class="optionItem">
+            <p @click.self="unfold($event)">
+                <img src="@/assets/img/profile/OptionList/sponsor.svg" alt="">
+                无偿资助开发者
+            </p>
+            <div>
+                <img src="@/assets/img/sponsor/Alipay.jpg" alt="">
+                <img src="@/assets/img/sponsor/WeChat.png" alt="">
+            </div>
         </li>
     </ul>
 </template>
@@ -70,6 +98,12 @@ export default {
     margin-bottom: 15px;
 }
 
+.optionItem img {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+}
+
 .optionItem p {
     margin: 0;
     padding: 0;
@@ -77,13 +111,36 @@ export default {
     padding-left: 15px;
 
     font-size: 17px;
+    color: #606266;
+}
+
+.optionItem p img {
+    margin-bottom: 3px;
 }
 
 .optionItem div {
     display: none;
 
-    height: 80px;
+    margin-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    min-height: 80px;
     background-color: #fff;
+
+    color: #909399;
+    font-size: 12px;
+}
+
+.optionItem div img {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: auto;
+    height: auto;
+    max-width: 95%;
+    max-height: 100%;
+    
 }
 
 hr {
@@ -91,7 +148,6 @@ hr {
     left: 50%;
     transform: translateX(-50%);
 
-    width: 95%;
     margin: 0;
 }
 </style>

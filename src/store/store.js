@@ -13,7 +13,13 @@ const store = new Vuex.Store({
         // // 记录进入profile页前是在chat页还是在explore页，以便返回至该页
         latestStay: '/chat',
         isLogin: false,
-        userInfo: {}
+        userInfo: {},
+        chatStatus: {
+            scroll: 0
+        },
+        exploreStatus: {
+            scroll: 0
+        }
     },
     mutations: {
         setIsGloveBoxDisplay (state, val) {
@@ -30,6 +36,12 @@ const store = new Vuex.Store({
         },
         setUserInfo (state, val) {
             state.userInfo = val;
+        },
+        setChatStatus (state, val) {
+            state.chatStatus = val;
+        },
+        setExploreStatus (state, val) {
+            state.exploreStatus = val;
         }
     },
     actions: {
