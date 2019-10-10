@@ -1,13 +1,15 @@
 <template>
     <div id="loginForm" action="">
         <input type="text" placeholder="Username" maxlength="25" autocomplete="off" v-model="enteredUsername" @keyup.enter="login">
-        <input type="password" name="" placeholder="Password" maxlength="25" autocomplete="off" v-model="enteredPassword" @keyup.enter="login">
-        <input type="radio" name="" id="" value="记住账号和密码">
+        <input type="password" readonly="readonly" name="" placeholder="Password" maxlength="25" autocomplete="off" @focus="pwdGetFocus($event)" @blur="pwdLoseFocus($event)" v-model="enteredPassword" @keyup.enter="login">
         <input type="button" value="login" @click.self="login">
-        <!-- 专用于开发时免登陆进入 -->
-        <button @click.self="skipin">skip in (4 dev)</button>
         <hr>
-        <router-link to="register">立即注册</router-link>      
+        <div>
+            <label>
+                <input type="checkbox" name="" id="" v-model="isChecked"><p>记住登陆信息</p>
+            </label>
+            <router-link to="register">立即注册</router-link>
+        </div>
     </div>
 </template>
 
@@ -19,6 +21,7 @@ export default {
         return {
             enteredUsername: '',
             enteredPassword: '',
+            isChecked: true
         }
     },
     methods: {
@@ -28,6 +31,11 @@ export default {
             if (this.enteredUsername != '' && this.enteredPassword != '') {
                 sendLoginData(this.enteredUsername, this.enteredPassword).then(res => {
                     if (res.isLogin) {
+                        // 用户勾选记住用户名和密码
+                        if (localStorage.getItem('isRemUP') == 'true') {
+                            localStorage.setItem('unm', _this.enteredUsername);
+                            localStorage.setItem('pwd', _this.enteredPassword);
+                        }
                         // 将该用户的基本信息全部存储到state中
                         _this.$store.commit('setIsLogin', true);
                         _this.$store.commit('setUserInfo', res);
@@ -42,15 +50,35 @@ export default {
                 alert('Input cannot be empty!');
             }
         },
-        skipin () {
-            console.log("skipin！");
-            let _this = this;
-            if (true) {
-                _this.$store.commit('setIsLogin', true);
-                _this.$router.replace('/chat');
+        // 让密码输入框在未获取焦点的时候为仅读模式，防止浏览器自动填充表单
+        pwdGetFocus (el) {
+            el.target.removeAttribute('readonly');
+        },
+        pwdLoseFocus (el) {
+            el.target.setAttribute('readonly', 'readonly');
+        }
+    },
+    watch: {
+        'isChecked': (newVal) => {
+            if (newVal == true) {
+                localStorage.setItem('isRemUP', true);
+            } else {
+                localStorage.setItem('isRemUP', false);
             }
         }
     },
+    created () {
+        if (localStorage.getItem('isRemUP') === null) {
+            localStorage.setItem('isRemUP', false);
+            this.isChecked = false;
+        } else if (localStorage.getItem('isRemUP') == 'true') {
+            this.isChecked = true;
+            this.enteredUsername = localStorage.getItem('unm');
+            this.enteredPassword = localStorage.getItem('pwd');
+        } else {
+            this.isChecked = false;
+        }
+    }
 
 }
 </script>
@@ -112,7 +140,7 @@ input:-webkit-autofill {
 
 input[type="text"] {
     height: 40px;
-    margin-bottom: 50px;
+    margin-bottom: 55px;
     padding-left: 10px;
     padding-right: 10px;
     background-color: rgba(255, 126, 103, 1);
@@ -127,7 +155,7 @@ input[type="text"] {
 
 input[type="password"] {
     height: 40px;
-    margin-bottom: 50px;
+    margin-bottom: 55px;
     padding-left: 10px;
     padding-right: 10px;
     background-color: rgba(255, 126, 103, 1);
@@ -153,19 +181,74 @@ input[type="button"] {
 }
 
 hr {
-    margin-top: 25px;
-    margin-bottom: 5px;
-}
-
-a {
     position: relative;
     left: 50%;
     transform: translateX(-50%);
 
-    display: block;
+    width: 90%;
+    margin-top: 25px;
+    margin-bottom: 5px;
+}
+
+#loginForm div {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    justify-content: space-between;
 
     width: 80%;
+    height: 32px;
+}
+
+label {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+
+    display: flex;
+    width: 350px;
+    height: 24px;
+    margin: 0;
+}
+
+label p {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+
+    height: 24px;
+    margin: 0;
+    padding-left: 3px;
+    color: rgba(255, 126, 103, 1);
+    line-height: 24px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+label input[type="checkbox"] {
+    position: relative;
+    top: 50%;
+    left: 0;
+    transform: translate(0, -50%);
+
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    display: block;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+
+    height: 24px;
+
     text-align: right;
     color: rgba(255, 126, 103, 1);
+    white-space:nowrap;
 }
 </style>

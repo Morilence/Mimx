@@ -27,7 +27,7 @@ export default {
             this.$router.replace(this.$store.state.latestStay);
         },
         logout () {
-            // 将登陆状态撤除并清楚用户信息
+            // 将登陆状态撤除并清除用户信息
             this.$store.commit('setIsLogin', false);
             this.$store.commit('setUserInfo', {});
             this.$router.replace('/');

@@ -1,11 +1,13 @@
 <template>
     <div id="registerForm">
         <input type="text" placeholder="Username" maxlength="25" autocomplete="off" v-model="enteredUsername" @keyup.enter="register">
-        <input type="password" placeholder="Password" maxlength="25" autocomplete="off" v-model="enteredPassword" @keyup.enter="register">
-        <input type="password" placeholder="Pwd Confirm" maxlength="25" autocomplete="off" v-model="enteredPwdConfirm" @keyup.enter="register">
+        <input type="password" readonly="readonly" placeholder="Password" maxlength="25" autocomplete="off" @focus="pwdGetFocus($event)" @blur="pwdLoseFocus($event)" v-model="enteredPassword" @keyup.enter="register">
+        <input type="password" readonly="readonly" placeholder="Pwd Confirm" maxlength="25" autocomplete="off" @focus="pwdGetFocus($event)" @blur="pwdLoseFocus($event)" v-model="enteredPwdConfirm" @keyup.enter="register">
         <input type="submit" value="register" @click.prevent="register">
         <hr>
-        <router-link to="login">返回登陆</router-link>
+        <div>
+            <router-link to="login">返回登陆</router-link>
+        </div>
     </div>
 </template>
 
@@ -41,6 +43,12 @@ export default {
             } else {
                 alert('Input cannot be empty!');
             }
+        },
+        pwdGetFocus (el) {
+            el.target.removeAttribute('readonly');
+        },
+        pwdLoseFocus (el) {
+            el.target.setAttribute('readonly', 'readonly');
         }
     }
 }
@@ -83,7 +91,7 @@ input:-webkit-autofill {
 
 input[type="text"] {
     height: 40px;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     padding-left: 10px;
     padding-right: 10px;
     background-color: rgba(255, 126, 103, 1);
@@ -98,7 +106,7 @@ input[type="text"] {
 
 input[type="password"] {
     height: 40px;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     padding-left: 10px;
     padding-right: 10px;
     background-color: rgba(255, 126, 103, 1);
@@ -124,18 +132,32 @@ input[type="submit"] {
 }
 
 hr {
-    margin-top: 25px;
-    margin-bottom: 5px;
-}
-
-a {
     position: relative;
     left: 50%;
     transform: translateX(-50%);
 
+    width: 90%;
+    margin-top: 25px;
+    margin-bottom: 5px;
+}
+
+#registerForm div {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 32px;
+}
+
+a {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
     display: block;
 
     width: 80%;
+    height: 24px;
     text-align: right;
     color: rgba(255, 126, 103, 1);
 }

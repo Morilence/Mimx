@@ -5,7 +5,7 @@ const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
 const static = require('koa-static');
 const session = require('koa-session');
-const { historyApiFallback } = require('koa2-connect-history-api-fallback');
+// const { historyApiFallback } = require('koa2-connect-history-api-fallback');
 
 const DB = require('./module/db');
 
@@ -29,9 +29,9 @@ app
     .use(bodyParser())
     // 配置静态资源服务中间件
     .use(static(path.join( __dirname, '/public')))
-    .use(historyApiFallback({
-        index: '/public/index.html'
-    }));
+    // .use(historyApiFallback({
+    //     index: '/public/index.html'
+    // }));
 
 // 配置路由
 router
