@@ -1,13 +1,14 @@
 <template>
-    <form id="loginForm" action="">
+    <div id="loginForm" action="">
         <input type="text" placeholder="Username" maxlength="25" autocomplete="off" v-model="enteredUsername" @keyup.enter="login">
         <input type="password" name="" placeholder="Password" maxlength="25" autocomplete="off" v-model="enteredPassword" @keyup.enter="login">
-        <input type="button" value="login" @click="login">
+        <input type="radio" name="" id="" value="记住账号和密码">
+        <input type="button" value="login" @click.self="login">
         <!-- 专用于开发时免登陆进入 -->
-        <!-- <button @click="skipin">skip in (4 dev)</button> -->
+        <button @click.self="skipin">skip in (4 dev)</button>
         <hr>
         <router-link to="register">立即注册</router-link>      
-    </form>
+    </div>
 </template>
 
 <script>
@@ -28,12 +29,8 @@ export default {
                 sendLoginData(this.enteredUsername, this.enteredPassword).then(res => {
                     if (res.isLogin) {
                         // 将该用户的基本信息全部存储到state中
+                        _this.$store.commit('setIsLogin', true);
                         _this.$store.commit('setUserInfo', res);
-                        if (localStorage.getItem('isLogin') === null) {
-                            localStorage.setItem('isLogin', true);
-                        }
-                        localStorage.setItem('isLogin', true);
-                        _this.$store.commit('setIsLogin', localStorage.getItem('isLogin'));
                         _this.$router.replace('/chat');
                         console.log('Login successfully.');
                     } else {
@@ -45,20 +42,14 @@ export default {
                 alert('Input cannot be empty!');
             }
         },
-        // skipin () {
-        //     console.log("skipin called");
-            
-        //     let _this = this;
-        //     if (true) {
-        //         // 将该用户的基本信息全部存储到state中
-        //         if (localStorage.getItem('isLogin') === null) {
-        //             localStorage.setItem('isLogin', true);
-        //         }
-        //         localStorage.setItem('isLogin', true);
-        //         _this.$store.commit('setIsLogin', localStorage.getItem('isLogin'));
-        //         _this.$router.replace('/chat');
-        //     }
-        // }
+        skipin () {
+            console.log("skipin！");
+            let _this = this;
+            if (true) {
+                _this.$store.commit('setIsLogin', true);
+                _this.$router.replace('/chat');
+            }
+        }
     },
 
 }

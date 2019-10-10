@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import GloveBoxContainer from './GloveBoxContainer';
+import GloveBoxContainer from '@/components/content/GloveBox/GloveBoxContainer';
 export default {
     name: 'GloveBox',
     components: {

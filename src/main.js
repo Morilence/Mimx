@@ -7,7 +7,7 @@ Vue.config.productionTip = false;
 
 router.beforeEach((to, from, next) => {
 	if (to.meta.requireAuth) {
-		if (store.state.isLogin == 'true') {
+		if (store.state.isLogin == true) {
 			next();
 		} else {
 			next({

@@ -1,12 +1,12 @@
 <template>
-    <form id="registerForm">
+    <div id="registerForm">
         <input type="text" placeholder="Username" maxlength="25" autocomplete="off" v-model="enteredUsername" @keyup.enter="register">
         <input type="password" placeholder="Password" maxlength="25" autocomplete="off" v-model="enteredPassword" @keyup.enter="register">
         <input type="password" placeholder="Pwd Confirm" maxlength="25" autocomplete="off" v-model="enteredPwdConfirm" @keyup.enter="register">
         <input type="submit" value="register" @click.prevent="register">
         <hr>
-        <router-link to="login">返回登陆</router-link> 
-    </form>
+        <router-link to="login">返回登陆</router-link>
+    </div>
 </template>
 
 <script>

@@ -5,7 +5,7 @@ const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
 const static = require('koa-static');
 const session = require('koa-session');
-// const { historyApiFallback } = require('koa2-connect-history-api-fallback');
+const { historyApiFallback } = require('koa2-connect-history-api-fallback');
 
 const DB = require('./module/db');
 
@@ -23,25 +23,20 @@ const CONFIG = {
     rolling: true,
     renew: false,
 };
-app.use(session(CONFIG, app));
-// 配置post中间件
-app.use(bodyParser());
-// 配置静态资源服务中间件
-app.use(static('./public'));
-app.use(static('./dist'));
-// app.use(historyApiFallback({
-//     index: '/dist/index.html'
-// }));
+app
+    .use(session(CONFIG, app))
+    // 配置post中间件
+    .use(bodyParser())
+    // 配置静态资源服务中间件
+    .use(static(path.join( __dirname, '/public')))
+    .use(historyApiFallback({
+        index: '/public/index.html'
+    }));
 
 // 配置路由
 router
     .get('/', async ctx => {
-        fs.readFile('./dist/index.html','utf-8',function(err, data){
-            if(err){
-                throw err;
-            }
-            ctx.body = data;
-        });
+        ctx.render('index');
     })
     .post('/register', async ctx => {
         let regData = ctx.request.body;

@@ -32,7 +32,10 @@ export default {
     },
     watch: {
         isLogin () {
-            if (this.$store.state.isLogin == 'false') {
+            if (this.$store.state.isLogin == true) {
+                this.username = this.$store.state.userInfo.username;
+                this.level = this.$store.state.userInfo.level;
+            } else {
                 this.avatarUrl = require('@/assets/img/common/visitor.svg');
                 this.username = '未登录';
                 this.level = 0;
@@ -40,14 +43,17 @@ export default {
         }
     },
     created () {
-        if (localStorage.getItem('isLogin') === null) {
-            localStorage.setItem('isLogin', false);
-        }
-        this.$store.commit('setIsLogin', localStorage.getItem('isLogin'));
-        if (this.$store.state.isLogin == 'true') {
+        if (this.$store.state.isLogin == true) {
             this.username = this.$store.state.userInfo.username;
             this.level = this.$store.state.userInfo.level;
+        } else {
+            this.avatarUrl = require('@/assets/img/common/visitor.svg');
+            this.username = '未登录';
+            this.level = 0;
         }
+    },
+    mounted () {
+        
     }
 }
 </script>

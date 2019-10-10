@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import TabBarContainer from './TabBarContainer';
-import TabBarItem from './TabBarItem';
+import TabBarContainer from '@/components/content/TabBar/TabBarContainer';
+import TabBarItem from '@/components/content/TabBar/TabBarItem';
 
 export default {
     name: 'TabBar',

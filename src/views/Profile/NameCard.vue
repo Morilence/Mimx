@@ -52,7 +52,14 @@ export default {
     },
     watch: {
         isLogin () {
-            if (this.$store.state.isLogin == 'false') {
+            if (this.$store.state.isLogin == true) {
+                this.username = this.$store.state.userInfo.username;
+                this.level = this.$store.state.userInfo.level;
+                this.issueNum = this.$store.state.userInfo.issueNum;
+                this.followNum = this.$store.state.userInfo.followNum;
+                this.collectNum = this.$store.state.userInfo.collectNum;
+                this.fanNum = this.$store.state.userInfo.fanNum;
+            } else {
                 this.avatarUrl = require('@/assets/img/common/visitor.svg');
                 this.username = '未登录';
                 this.level = 0;
@@ -64,17 +71,22 @@ export default {
         }
     },
     created () {
-        if (localStorage.getItem('isLogin') === null) {
-            localStorage.setItem('isLogin', false);
-        }
-        this.$store.state.isLogin = localStorage.getItem('isLogin');
-        if (this.$store.state.isLogin == 'true') {
+        // 需要提前就把数据加载好，因为watch还没开始监听
+        if (this.$store.state.isLogin == true) {
             this.username = this.$store.state.userInfo.username;
             this.level = this.$store.state.userInfo.level;
             this.issueNum = this.$store.state.userInfo.issueNum;
             this.followNum = this.$store.state.userInfo.followNum;
             this.collectNum = this.$store.state.userInfo.collectNum;
             this.fanNum = this.$store.state.userInfo.fanNum;
+        } else {
+            this.avatarUrl = require('@/assets/img/common/visitor.svg');
+            this.username = '未登录';
+            this.level = 0;
+            this.issueNum = 0;
+            this.followNum = 0;
+            this.collectNum = 0;
+            this.fanNum = 0;
         }
     }
 }

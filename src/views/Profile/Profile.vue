@@ -27,11 +27,9 @@ export default {
             this.$router.replace(this.$store.state.latestStay);
         },
         logout () {
-            if (localStorage.getItem('isLogin') === null) {
-                localStorage.setItem('isLogin', false);
-            }
-            localStorage.setItem('isLogin', false);
-            this.$store.commit('setIsLogin', localStorage.getItem('isLogin'));
+            // 将登陆状态撤除并清楚用户信息
+            this.$store.commit('setIsLogin', false);
+            this.$store.commit('setUserInfo', {});
             this.$router.replace('/');
         }
     },

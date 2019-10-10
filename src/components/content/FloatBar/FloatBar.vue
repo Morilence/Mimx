@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import FloatBarContainer from './FloatBarContainer';
+import FloatBarContainer from '@/components/content/FloatBar/FloatBarContainer';
 
 export default {
     name: 'FloatBar',
