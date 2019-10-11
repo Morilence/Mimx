@@ -38,11 +38,20 @@ export default {
         }
     },
     methods: {
-       
+        
     },
     created () {
 
     },
+    mounted () {
+
+    },
+    activated () {
+
+   	},
+  	deactivated () {
+
+	}
 }
 </script>
 
