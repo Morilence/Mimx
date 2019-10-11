@@ -25,7 +25,7 @@
 import TabBar from '@/components/content/TabBar/TabBar';
 import FloatBar from '@/components/content/FloatBar/FloatBar';
 import GloveBox from '@/components/content/GloveBox/GloveBox';
-import MessageItem from './MessageItem';
+import MessageItem from '@/views/Chat/MessageItem';
 export default {
     name: 'Chat',
     components: {

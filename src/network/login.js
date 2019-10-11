@@ -1,4 +1,4 @@
-import { request } from './request';
+import { request } from '@/network/request';
 
 export function sendLoginData(un, pw) {
     return request({

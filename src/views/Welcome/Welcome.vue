@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import Login from './Login';
-import Reigister from './Register';
+import Login from '@/views/Welcome/Login';
+import Reigister from '@/views/Welcome/Register';
 export default {
     name: '',
     components: {

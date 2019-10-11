@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import NameCard from './NameCard';
-import OptionList from './OptionList';
+import NameCard from '@/views/Profile/NameCard';
+import OptionList from '@/views/Profile/OptionList';
 export default {
     name: 'Profile',
     components: {

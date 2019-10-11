@@ -5,7 +5,7 @@ const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
 const static = require('koa-static');
 const session = require('koa-session');
-// const { historyApiFallback } = require('koa2-connect-history-api-fallback');
+const { historyApiFallback } = require('koa2-connect-history-api-fallback');
 
 const DB = require('./module/db');
 
@@ -24,14 +24,15 @@ const CONFIG = {
     renew: false,
 };
 app
+    // koa2-connect-history-api-fallback中间件一定要放在静态资源服务中间件加载前面，不然会失效！！！
+    .use(historyApiFallback({
+        index: '/index.html'
+    }))
     .use(session(CONFIG, app))
     // 配置post中间件
     .use(bodyParser())
     // 配置静态资源服务中间件
     .use(static(path.join( __dirname, '/public')))
-    // .use(historyApiFallback({
-    //     index: '/public/index.html'
-    // }));
 
 // 配置路由
 router

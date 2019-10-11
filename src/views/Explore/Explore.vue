@@ -21,8 +21,8 @@
 import TabBar from '@/components/content/TabBar/TabBar';
 import FloatBar from '@/components/content/FloatBar/FloatBar';
 import GloveBox from '@/components/content/GloveBox/GloveBox';
-import NavBar from './NavBar';
-import PostsItem from './PostsItem';
+import NavBar from '@/views/Explore/NavBar';
+import PostsItem from '@/views/Explore/PostsItem';
 export default {
     name: 'Explore',
     components: {

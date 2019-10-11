@@ -11,7 +11,7 @@ const Profile = () => import('@/views/Profile/Profile');
 Vue.use(Router)
 
 export default new Router({
-	mode: 'hash',
+	mode: 'history',
 	linkActiveClass: 'active',
 	routes: [
 		{
@@ -45,6 +45,7 @@ export default new Router({
 			meta: {
 				// 标明需要requireAuth属性为true才可进入此路由（用于限制登陆）
 				requireAuth: true,
+				keepAlive: true
 			}
 		},
 		{
@@ -52,6 +53,7 @@ export default new Router({
 			component: Explore,
 			meta: {
 				requireAuth: true,
+				keepAlive: true
 			}
 		},
 		{
@@ -59,6 +61,7 @@ export default new Router({
 			component: Profile,
 			meta: {
 				requireAuth: true,
+				keepAlive: true
 			}
 		}
 	]
