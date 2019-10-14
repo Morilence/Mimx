@@ -6,10 +6,12 @@ const bodyParser = require('koa-bodyparser');
 const static = require('koa-static');
 const session = require('koa-session');
 const { historyApiFallback } = require('koa2-connect-history-api-fallback');
+const IO = require('koa-socket-2');
 
 const DB = require('./module/db');
 
 const app = new Koa();
+const io = new IO();
 const router = new Router();
 // 配置session中间件
 app.keys = ['some secret hurr'];
@@ -32,7 +34,7 @@ app
     // 配置post中间件
     .use(bodyParser())
     // 配置静态资源服务中间件
-    .use(static(path.join( __dirname, '/public')))
+    .use(static(path.join( __dirname, '/public')));
 
 // 配置路由
 router
@@ -83,5 +85,11 @@ router
 app
     .use(router.routes())
     .use(router.allowedMethods());
+
+// 配置socket.io
+io.attach(app);
+io.on('message', (ctx, data) => {
+    console.log(data);
+});
 
 app.listen(3000);

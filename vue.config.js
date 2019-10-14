@@ -31,7 +31,9 @@ module.exports = {
         port: 3000,
         https: false,
         hotOnly: true,
-        disableHostCheck: true
+        disableHostCheck: true,
+        // 使devServer支持history模式
+        historyApiFallback: true
     },
     css: {
         modules: false, // 是否开启支持 foo.module.css 样式

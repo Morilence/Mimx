@@ -1,6 +1,7 @@
 <template>
     <div>
         <router-view></router-view>
+        <a href="" @click.prevent="skipin">skipin 4 local dev</a>
     </div>
 </template>
 
@@ -19,7 +20,10 @@ export default {
         }
     },
     methods: {
-        
+        skipin () {
+            this.$store.commit('setIsLogin', true);
+            this.$router.replace('/chat');
+        },
     },
     created () {
 
@@ -56,5 +60,18 @@ p {
 
     color: #fff;
     font-weight: bold;
+}
+
+a {
+    position: absolute;
+    top: 0;
+
+    display: block;
+    width: 100%;
+    padding-top: 5px;
+    padding-left: 10px;
+
+    text-align: left;
+    color: rgba(255, 126, 103, 1);
 }
 </style>

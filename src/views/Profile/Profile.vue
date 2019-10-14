@@ -4,18 +4,20 @@
         <name-card></name-card>
         <option-list></option-list>
         <button id="logoutBtn" @click="logout">logout</button>
-        <img id="backBtn" src="@/assets/img/profile/up_w.svg" alt="" @click="back">
+        <title-bar :backImgPath="require('@/assets/img/common/left_w.svg')" :menuImgPath="require('@/assets/img/common/menu_w.svg')" title="我" titleColor="#fafafa" bgColor="rgba(255, 126, 103, 1)" :isShadow="true"></title-bar>
     </div>
 </template>
 
 <script>
+import TitleBar from '@/components/common/TitleBar';
 import NameCard from '@/views/Profile/NameCard';
 import OptionList from '@/views/Profile/OptionList';
 export default {
     name: 'Profile',
     components: {
         NameCard,
-        OptionList
+        OptionList,
+        TitleBar
     },
     data () {
         return {
@@ -23,9 +25,6 @@ export default {
         }
     },
     methods: {
-        back () {
-            this.$router.replace(this.$store.state.latestStay);
-        },
         logout () {
             // 将登陆状态撤除并清除用户信息
             this.$store.commit('setIsLogin', false);
@@ -65,7 +64,7 @@ export default {
     top: 0;
 
     width: 100%;
-    height: 140px;
+    height: 160px;
     border-radius: 0px 0px 35px 35px/ 0px 0px 15px 15px;
     background-color: rgba(255, 126, 103, 1);
 }
@@ -77,7 +76,7 @@ export default {
 
     width: 90%;
     margin-top: 5px;
-    margin-bottom: 55px;
+    margin-bottom: 40px;
     padding: 10px;
     background-color: #fff;
     outline: none;

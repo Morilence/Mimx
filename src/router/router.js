@@ -7,6 +7,9 @@ const Register = () => import('@/views/Welcome/Register');
 const Chat = () => import('@/views/Chat/Chat');
 const Explore = () => import('@/views/Explore/Explore');
 const Profile = () => import('@/views/Profile/Profile');
+const Sundries = () => import('@/views/Sundries/Sundries');
+const FindUser = () => import('@/views/Sundries/FindUser');
+const Write = () => import('@/views/Sundries/Write');
 
 Vue.use(Router)
 
@@ -63,6 +66,23 @@ export default new Router({
 				requireAuth: true,
 				keepAlive: true
 			}
+		},
+		{
+			path: '/sundries',
+			component: Sundries,
+			meta: {
+				requireAuth: true,
+			},
+			children: [
+				{
+					path: 'findUser',
+					component: FindUser
+				},
+				{
+					path: 'write',
+					component: Write
+				}
+			]
 		}
 	],
 	scrollBehavior (to, from, savedPosition) {

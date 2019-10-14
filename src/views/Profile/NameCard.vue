@@ -98,7 +98,7 @@ export default {
     left: 50%;
     transform: translateX(-50%);
 
-    margin-top: 40px;
+    margin-top: 60px;
     width: 90%;
     height: 130px;
     padding-top: 5px;

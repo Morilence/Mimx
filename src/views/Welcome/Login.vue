@@ -40,6 +40,8 @@ export default {
                         _this.$store.commit('setIsLogin', true);
                         _this.$store.commit('setUserInfo', res);
                         _this.$router.replace('/chat');
+                        // 测试vue-socket.io
+                        // _this.$socket.emit('message', _this.enteredUsername+' is online.');
                         console.log('Login successfully.');
                     } else {
                         alert('Wrong account or password!');

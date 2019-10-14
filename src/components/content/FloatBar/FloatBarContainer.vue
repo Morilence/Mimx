@@ -22,7 +22,7 @@ export default {
     },
     methods: {
         openProfile () {
-            this.$router.replace('/profile');
+            this.$router.push('/profile');
         }
     },
     computed: {

@@ -1,10 +1,10 @@
 <template>
     <ul id="gloveBoxContainer">
-        <li>
+        <li @click="findUser">
             <img src="@/assets/img/GloveBox/searchUser.svg" alt="">
             <p>查找用户</p>
         </li>
-        <li>
+        <li @click="write">
             <img src="@/assets/img/GloveBox/createPost.svg" alt="">
             <p>写点什么</p>
         </li>
@@ -20,7 +20,12 @@ export default {
         }
     },
     methods: {
-
+        findUser () {
+            this.$router.push('/sundries/findUser');
+        },
+        write () {
+            this.$router.push('/sundries/write');
+        }
     }
 }
 </script>
@@ -45,6 +50,7 @@ export default {
 
 li {
     width: 50px;
+    height: 65px;
     margin: 12px;
 }
 

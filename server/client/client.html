@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<script src="./socket.io.js"></script>
+
+<body>
+    
+</body>
+<script>
+    let sock = io.connect('ws://localhost:3000/');
+    
+    /*
+    1. sock.on('消息头', 参数);//接收服务器端信息
+    2. sock.emit('消息头', 参数); //给服务器发送消息
+    */
+    
+    sock.emit('message', "hello world");
+
+    sock.on('message', (param) => {
+        console.log('server accept success:', param)
+    })
+</script>
+</html>

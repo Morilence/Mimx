@@ -56,7 +56,7 @@ export default {
 .tabBarItem img {
     width: 26px;
     height: 26px;
-    margin-top: 3px;
+    margin-top: 4px;
     vertical-align: middle;
 }
 </style>
