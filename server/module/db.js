@@ -39,7 +39,7 @@ class Db {
     find (collectionName, json) {
         return new Promise( (resolve, reject) => {
             this.connect().then( (db) => {
-                var result = db.collection(collectionName).find(json);
+                let result = db.collection(collectionName).find(json);
                 // 遍历结果
                 result.toArray(function (err, docs) {
                     if (err) {
@@ -88,6 +88,28 @@ class Db {
                         reject(err);
                     } else {
                         resolve(result);
+                    }
+                });
+            });
+        });
+    }
+
+    aggregate (collectionName, json) {
+        return new Promise( (resolve, reject) => {
+            this.connect().then( (db) => {
+                let result = db.collection(collectionName).aggregate(json);
+                result.toArray(function (err, docs) {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        let res = [];
+                        for (let i=0; i<docs.length; i++) {
+                            let item = {}                            
+                            item.avatarUrl = docs[i].avatarUrl;
+                            item.username = docs[i].username;
+                            res.push(item);
+                        }
+                        resolve(res);
                     }
                 });
             });

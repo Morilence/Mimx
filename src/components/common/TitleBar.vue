@@ -49,9 +49,6 @@ export default {
 }
 
 img {
-    /* position: relative;
-    top: 50%;
-    transform: translateY(-50%); */
     width: 35px;
 }
 
@@ -64,9 +61,6 @@ img:nth-child(3) {
 }
 
 p {
-    /* position: relative;
-    top: 50%;
-    transform: translateY(-50%); */
     height: 16px;
     margin-bottom: 0;
     text-align: center;

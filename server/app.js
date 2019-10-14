@@ -41,6 +41,12 @@ router
     .get('/', async ctx => {
         ctx.render('index');
     })
+    .get('/getRecommendUsers', async ctx => {
+        await DB.aggregate('users', [{ $sample: { size: 5 } }]).then( res => {
+            // console.log(res);
+            ctx.body = res;
+        });
+    })
     .post('/register', async ctx => {
         let regData = ctx.request.body;
         let flag = false;

@@ -8,8 +8,8 @@ const Chat = () => import('@/views/Chat/Chat');
 const Explore = () => import('@/views/Explore/Explore');
 const Profile = () => import('@/views/Profile/Profile');
 const Sundries = () => import('@/views/Sundries/Sundries');
-const FindUser = () => import('@/views/Sundries/FindUser');
-const Write = () => import('@/views/Sundries/Write');
+const FindUser = () => import('@/views/Sundries/FindUser/FindUser');
+const Write = () => import('@/views/Sundries/Write/Write');
 
 Vue.use(Router)
 

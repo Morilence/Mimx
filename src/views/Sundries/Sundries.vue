@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import FindUser from '@/views/Sundries/FindUser';
-import Write from '@/views/Sundries/Write';
+import FindUser from '@/views/Sundries/FindUser/FindUser';
+import Write from '@/views/Sundries/Write/Write';
 export default {
     name: 'Sundries',
     components: {
