@@ -42,30 +42,36 @@ export default {
 
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
     width: 100%;
-    height: 45px;
+    height: 49px;
 }
 
 img {
-    position: relative;
+    /* position: relative;
     top: 50%;
-    transform: translateY(-50%);
-    width: 30px;
+    transform: translateY(-50%); */
+    width: 35px;
 }
 
 img:nth-child(1) {
-    padding-left: 10px;
+    padding-left: 12px;
 }
 
 img:nth-child(3) {
-    padding-right: 10px;
+    padding-right: 12px;
 }
 
 p {
-    height: 45px;
+    /* position: relative;
+    top: 50%;
+    transform: translateY(-50%); */
+    height: 16px;
+    margin-bottom: 0;
     text-align: center;
+    font-size: 16px;
     font-weight: bold;
-    line-height: 45px;
+    line-height: 16px;
 }
 </style>
