@@ -188,7 +188,7 @@ export default {
     width: 90%;
     /* height: 300px; */
     margin-top: 25px;
-    padding-top: 15px;
+    padding-top: 10px;
     padding-bottom: 10px;
     
     border-radius: 4px;
@@ -204,6 +204,7 @@ export default {
 
     width: 90%;
     height: 35px;
+    margin-top: 10px;
     margin-bottom: 15px;
 }
 
@@ -338,8 +339,8 @@ li p {
 
 #noExistHint {
     margin: 0;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     text-align: center;
     color: #909399;
 }
