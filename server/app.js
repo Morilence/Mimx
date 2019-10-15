@@ -41,9 +41,13 @@ router
     .get('/', async ctx => {
         ctx.render('index');
     })
+    .get('/getSearchResults', async ctx => {
+        await DB.find('users', {'username': new RegExp(ctx.query.searchKey)}).then( res => {
+            ctx.body = res;
+        });
+    })
     .get('/getRecommendUsers', async ctx => {
         await DB.aggregate('users', [{ $sample: { size: Number(ctx.query.recommendNum) } }]).then( res => {
-            // console.log(res);
             ctx.body = res;
         });
     })
