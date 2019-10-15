@@ -21,6 +21,7 @@
 <script>
 import { getRecommendUsers } from '@/network/sundries';
 import TitleBar from '@/components/common/TitleBar';
+import { log } from 'util';
 export default {
     name: '',
     components: {
@@ -42,11 +43,31 @@ export default {
 
     },
     created () {
-        getRecommendUsers().then(res => {
-            for (let i=0; i<res.length; i++) {
-                res[i].avatarUrl = require('@/assets/img/common/visitor.svg');
+        let _this = this;
+        getRecommendUsers(5).then(res => {
+            let targetNum = 5;
+            let resAfterFiltration = [];
+            if (res.length < targetNum) {
+                targetNum = res.length;
             }
-            this.recommendList = res;
+            // console.log(targetNum);
+            // console.log(res);
+            let flag = false;
+            for (let i=0; i<targetNum; i++) {
+                if (res[i].username != _this.$store.state.userInfo.username) {
+                    res[i].avatarUrl = require('@/assets/img/common/visitor.svg');
+                    resAfterFiltration.push(res[i]);
+                } else {
+                    flag = true;
+                }
+            }
+            // 确保推荐的人数相同，若出现自己则删除直接返回，若未出现则删除最后一个以达目的
+            if (flag) {
+                this.recommendList = resAfterFiltration;
+            } else {
+                resAfterFiltration.pop();
+                this.recommendList = resAfterFiltration;
+            }
         });
     }
 }

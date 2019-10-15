@@ -42,7 +42,7 @@ router
         ctx.render('index');
     })
     .get('/getRecommendUsers', async ctx => {
-        await DB.aggregate('users', [{ $sample: { size: 5 } }]).then( res => {
+        await DB.aggregate('users', [{ $sample: { size: Number(ctx.query.recommendNum) } }]).then( res => {
             // console.log(res);
             ctx.body = res;
         });
