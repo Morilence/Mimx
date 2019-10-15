@@ -1,7 +1,7 @@
 <template>
     <div id="tabBar">
         <tab-bar-container>
-            <tab-bar-item path="/chat">
+            <tab-bar-item path="/main/chat">
                 <img slot="item-icon" src="@/assets/img/TabBar/chat.svg" alt="">
                 <img slot="item-icon-active" src="@/assets/img/TabBar/chat_active.svg" alt="">
                 <p slot="item-text">Chat</p>
@@ -9,7 +9,7 @@
             <div class="tabBarBtn">
                 <img :src="this.$store.state.createUrl" alt="" @click="switchGloveBox">
             </div>
-            <tab-bar-item path="/explore">
+            <tab-bar-item path="/main/explore">
                 <img slot="item-icon" src="@/assets/img/TabBar/explore.svg" alt="">
                 <img slot="item-icon-active" src="@/assets/img/TabBar/explore_active.svg" alt="">
                 <p slot="item-text">Explore</p>

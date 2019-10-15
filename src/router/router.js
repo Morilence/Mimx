@@ -4,8 +4,9 @@ import Router from 'vue-router'
 const Welcome = () => import('@/views/Welcome/Welcome');
 const Login = () => import('@/views/Welcome/Login');
 const Register = () => import('@/views/Welcome/Register');
-const Chat = () => import('@/views/Chat/Chat');
-const Explore = () => import('@/views/Explore/Explore');
+const Main = () => import('@/views/Main/Main');
+const Chat = () => import('@/views/Main/Chat/Chat');
+const Explore = () => import('@/views/Main/Explore/Explore');
 const Profile = () => import('@/views/Profile/Profile');
 const Sundries = () => import('@/views/Sundries/Sundries');
 const FindUser = () => import('@/views/Sundries/FindUser/FindUser');
@@ -43,21 +44,34 @@ export default new Router({
 			]
 		},
 		{
-			path: '/chat',
-			component: Chat,
-			meta: {
-				// 标明需要requireAuth属性为true才可进入此路由（用于限制登陆）
-				requireAuth: true,
-				keepAlive: true
-			}
+			path: '/main',
+			redirect: '/main/chat'
 		},
 		{
-			path: '/explore',
-			component: Explore,
+			path: '/main',
+			component: Main,
 			meta: {
-				requireAuth: true,
-				keepAlive: true
-			}
+				requireAuth: false
+			},
+			children: [
+				{
+					path: 'chat',
+					component: Chat,
+					meta: {
+						// 标明需要requireAuth属性为true才可进入此路由（用于限制登陆）
+						requireAuth: true,
+						keepAlive: true
+					}
+				},
+				{
+					path: 'explore',
+					component: Explore,
+					meta: {
+						requireAuth: true,
+						keepAlive: true
+					}
+				},
+			]
 		},
 		{
 			path: '/profile',

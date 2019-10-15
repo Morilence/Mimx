@@ -22,7 +22,7 @@ export default {
     methods: {
         skipin () {
             this.$store.commit('setIsLogin', true);
-            this.$router.replace('/chat');
+            this.$router.replace('/main/chat');
         },
     },
     created () {

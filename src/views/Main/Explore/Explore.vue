@@ -11,26 +11,17 @@
         <div id="endHint">
             已经到底啦(￣▽￣)""
         </div>
-        <float-bar></float-bar>
-        <glove-box></glove-box>
-		<tab-bar></tab-bar>
     </div>
 </template>
 
 <script>
-import TabBar from '@/components/content/TabBar/TabBar';
-import FloatBar from '@/components/content/FloatBar/FloatBar';
-import GloveBox from '@/components/content/GloveBox/GloveBox';
-import NavBar from '@/views/Explore/NavBar';
-import PostsItem from '@/views/Explore/PostsItem';
+import NavBar from '@/views/Main/Explore/NavBar';
+import PostsItem from '@/views/Main/Explore/PostsItem';
 export default {
     name: 'Explore',
     components: {
         NavBar,
-        PostsItem,
-        TabBar,
-        FloatBar,
-        GloveBox
+        PostsItem
     },
     data () {
         return {

@@ -39,7 +39,7 @@ export default {
                         // 将该用户的基本信息全部存储到state中
                         _this.$store.commit('setIsLogin', true);
                         _this.$store.commit('setUserInfo', res);
-                        _this.$router.replace('/chat');
+                        _this.$router.replace('/main/chat');
                         // 测试vue-socket.io
                         // _this.$socket.emit('message', _this.enteredUsername+' is online.');
                         console.log('Login successfully.');

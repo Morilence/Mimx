@@ -15,24 +15,15 @@
         <div id="endHint">
             已经到底啦(￣▽￣)""
         </div>
-        <float-bar></float-bar>
-        <glove-box></glove-box>
-		<tab-bar></tab-bar>
     </div>
 </template>
 
 <script>
-import TabBar from '@/components/content/TabBar/TabBar';
-import FloatBar from '@/components/content/FloatBar/FloatBar';
-import GloveBox from '@/components/content/GloveBox/GloveBox';
-import MessageItem from '@/views/Chat/MessageItem';
+import MessageItem from '@/views/Main/Chat/MessageItem';
 export default {
     name: 'Chat',
     components: {
-        MessageItem,
-        TabBar,
-        FloatBar,
-        GloveBox
+        MessageItem
     },
     data () {
         return {
