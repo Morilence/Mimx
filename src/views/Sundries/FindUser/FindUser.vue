@@ -98,7 +98,7 @@ export default {
                     }
                     let resAfterFiltration = [];
                     for (let i=0; i<res.length; i++) {
-                        res[i].avatarUrl = require('@/assets/img/common/visitor.svg');
+                        // res[i].avatarUrl = require('@/assets/img/common/visitor.svg');
                         resAfterFiltration.push(res[i]);
                     }
                     _this.findTempList = resAfterFiltration;
@@ -132,7 +132,7 @@ export default {
                     }
                     let resAfterFiltration = [];
                     for (let i=0; i<res.length; i++) {
-                        res[i].avatarUrl = require('@/assets/img/common/visitor.svg');
+                        // res[i].avatarUrl = require('@/assets/img/common/visitor.svg');
                         resAfterFiltration.push(res[i]);
                     }
                     _this.findTempList = resAfterFiltration;
@@ -157,7 +157,7 @@ export default {
             let flag = false;
             for (let i=0; i<targetNum; i++) {
                 if (res[i].username != _this.$store.state.userInfo.username) {
-                    res[i].avatarUrl = require('@/assets/img/common/visitor.svg');
+                    // res[i].avatarUrl = require('@/assets/img/common/visitor.svg');
                     resAfterFiltration.push(res[i]);
                 } else {
                     flag = true;
@@ -320,6 +320,7 @@ li p {
     justify-content: space-between;
 
     margin-top: 15px;
+    margin-bottom: 5px;
     padding-left: 15px;
     padding-right: 15px;
 }

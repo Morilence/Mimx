@@ -24,7 +24,7 @@ export default {
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
-    bottom: 10px;
+    bottom: 12px;
 
     box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.2);
 }

@@ -1,6 +1,7 @@
 <template>
     <div id="nameCard">
         <div id="essentialInfo">
+            <input type="file" name="image" accept="image/*" @change="onChangeAvatar($event)">
             <img :src="avatarUrl" alt="">
             <div>
                 <p>{{ username }}</p>
@@ -29,11 +30,12 @@
 </template>
 
 <script>
+import { changeAvatar } from '@/network/profile';
 export default {
     name: 'NameCard',
     data () {
         return {
-            avatarUrl: require('@/assets/img/common/visitor.svg'),
+            avatarUrl: '',
             username: '未登录',
             level: 0,
             issueNum: 0,
@@ -42,8 +44,28 @@ export default {
             fanNum: 0
         }
     },
-    methods: {
+    computed: {
         
+    },
+    methods: {
+        onChangeAvatar (e) {
+            let _this = this;
+            const avatar = e.target.files[0];
+            // 防止用户放弃改换图片而导致获取文件为空
+            if (avatar != null) {
+                let formData = new FormData();
+                formData.append('_id', this.$store.state.userInfo._id);
+                formData.append('avatar', avatar);
+                changeAvatar(formData).then(res => {
+                    // 添加时间戳使每次路径请求不同而防止从缓存获取
+                    let newUserInfo = _this.$store.state.userInfo;
+                    newUserInfo.avatarUrl = res + '?timestamp=' + (new Date().getTime());
+                    _this.$store.commit('setUserInfo', newUserInfo);
+                    _this.avatarUrl = _this.$store.state.userInfo.avatarUrl;
+                    console.log(_this.avatarUrl);
+                });
+            }
+        }
     },
     computed: {
         isLogin () {
@@ -74,14 +96,15 @@ export default {
         // 需要提前就把数据加载好，因为watch还没开始监听
         if (this.$store.state.isLogin == true) {
             this.username = this.$store.state.userInfo.username;
+            this.avatarUrl = this.$store.state.userInfo.avatarUrl;
             this.level = this.$store.state.userInfo.level;
             this.issueNum = this.$store.state.userInfo.issueNum;
             this.followNum = this.$store.state.userInfo.followNum;
             this.collectNum = this.$store.state.userInfo.collectNum;
             this.fanNum = this.$store.state.userInfo.fanNum;
         } else {
-            this.avatarUrl = require('@/assets/img/common/visitor.svg');
             this.username = '未登录';
+            this.avatarUrl = require('@/assets/img/common/visitor.svg');
             this.level = 0;
             this.issueNum = 0;
             this.followNum = 0;
@@ -119,6 +142,22 @@ export default {
     height: 80px;
     padding-left: 15px;
     padding-right: 15px;
+}
+
+#essentialInfo input[type="file"] {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    margin: 0;
+    padding: 0;
+    width: 60px;
+    height: 60px;
+    /* margin-right: 10px; */
+    border: 1px solid rgba(255, 126, 103, 1);
+    border-radius: 4px;
+    z-index: 2;
+    opacity: 0;
 }
 
 #essentialInfo img {

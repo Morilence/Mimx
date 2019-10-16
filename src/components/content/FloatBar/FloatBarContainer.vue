@@ -45,10 +45,11 @@ export default {
     created () {
         if (this.$store.state.isLogin == true) {
             this.username = this.$store.state.userInfo.username;
+            this.avatarUrl = this.$store.state.userInfo.avatarUrl;
             this.level = this.$store.state.userInfo.level;
         } else {
-            this.avatarUrl = require('@/assets/img/common/visitor.svg');
             this.username = '未登录';
+            this.avatarUrl = require('@/assets/img/common/visitor.svg');
             this.level = 0;
         }
     },

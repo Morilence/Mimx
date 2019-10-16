@@ -2,10 +2,13 @@ const fs = require('fs');
 const path = require('path');
 const Koa = require('koa');
 const Router = require('koa-router');
-const bodyParser = require('koa-bodyparser');
+// const bodyParser = require('koa-bodyparser');
+const koaBody = require('koa-body');
 const static = require('koa-static');
 const session = require('koa-session');
 const { historyApiFallback } = require('koa2-connect-history-api-fallback');
+// 转化为实际id
+const ObjectId = require('mongodb').ObjectId;
 const IO = require('koa-socket-2');
 
 const DB = require('./module/db');
@@ -32,7 +35,15 @@ app
     }))
     .use(session(CONFIG, app))
     // 配置post中间件
-    .use(bodyParser())
+    // .use(bodyParser())
+    // 支持文件上传
+    .use(koaBody({
+        multipart: true,
+        formidable: {
+            maxFieldsSize: 200*1024*1024,    // 设置上传文件大小最大限制，默认2M
+            keepExtensions: true,    // 保持文件的后缀
+        }
+    }))
     // 配置静态资源服务中间件
     .use(static(path.join( __dirname, '/public')));
 
@@ -50,6 +61,24 @@ router
         await DB.aggregate('users', [{ $sample: { size: Number(ctx.query.recommendNum) } }]).then( res => {
             ctx.body = res;
         });
+    })
+    .post('/changeAvatar', async ctx => {
+        let avrData = ctx.request.body;
+        let file = ctx.request.files.avatar; // 获取上传文件
+        // 修改文件名为用户id
+        let spl = file.name.split(".");
+        file.name = avrData._id + '.' + spl[spl.length-1];
+        // 创建可读流
+        const reader = fs.createReadStream(file.path);
+        let filePath = path.join(__dirname, 'public/resource/avatar') + `/${file.name}`;
+        // 创建可写流
+        const writer = fs.createWriteStream(filePath);
+        // 可读流通过管道写入可写流
+        reader.pipe(writer);
+        // 保存图片路径
+        let newAvatarUrl = '/resource/avatar/' + file.name;
+        await DB.update('users', {'_id': ObjectId(avrData._id)}, {'avatarUrl': newAvatarUrl});
+        ctx.body = newAvatarUrl;
     })
     .post('/register', async ctx => {
         let regData = ctx.request.body;
@@ -72,7 +101,7 @@ router
                 followNum: 0,
                 collectNum: 0,
                 fanNum: 0,
-                avatarUrl: ''
+                avatarUrl: '/resource/avatar/default.svg'
             });
             ctx.body = true;
         }
