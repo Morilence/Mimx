@@ -3,7 +3,7 @@
         <keep-alive>
 			<router-view v-if="$route.meta.keepalive"></router-view>
 		</keep-alive>
-		<router-view v-if="!$route.meta.keepalive"></router-view> 
+		<router-view v-if="!$route.meta.keepalive"></router-view>
         <float-bar></float-bar>
         <glove-box></glove-box>
 		<tab-bar></tab-bar>

@@ -4,10 +4,20 @@ import Router from 'vue-router'
 const Welcome = () => import('@/views/Welcome/Welcome');
 const Login = () => import('@/views/Welcome/Login');
 const Register = () => import('@/views/Welcome/Register');
+
 const Main = () => import('@/views/Main/Main');
 const Chat = () => import('@/views/Main/Chat/Chat');
 const Explore = () => import('@/views/Main/Explore/Explore');
+
 const Profile = () => import('@/views/Profile/Profile');
+
+const Options = () => import('@/views/Options/Options');
+const EssentialInfo = () => import('@/views/Options/EssentialInfo/EssentialInfo');
+const AccountSecurity = () => import('@/views/Options/AccountSecurity/AccountSecurity');
+const Settings = () => import('@/views/Options/Settings/Settings');
+const About = () => import('@/views/Options/About/About');
+const Sponsor = () => import('@/views/Options/Sponsor/Sponsor');
+
 const Sundries = () => import('@/views/Sundries/Sundries');
 const FindUser = () => import('@/views/Sundries/FindUser/FindUser');
 const Write = () => import('@/views/Sundries/Write/Write');
@@ -83,6 +93,10 @@ export default new Router({
 		},
 		{
 			path: '/sundries',
+			redirect: '/sundries/findUser'
+		},
+		{
+			path: '/sundries',
 			component: Sundries,
 			meta: {
 				requireAuth: true,
@@ -95,6 +109,39 @@ export default new Router({
 				{
 					path: 'write',
 					component: Write
+				}
+			]
+		},
+		{
+			path: '/options',
+			redirect: '/options/essentialInfo'
+		},
+		{
+			path: '/options',
+			component: Options,
+			meta: {
+				requireAuth: true,
+			},
+			children: [
+				{
+					path: 'essentialInfo',
+					component: EssentialInfo
+				},
+				{
+					path: 'accountSecurity',
+					component: AccountSecurity
+				},
+				{
+					path: 'settings',
+					component: Settings
+				},
+				{
+					path: 'about',
+					component: About
+				},
+				{
+					path: 'Sponsor',
+					component: Sponsor
 				}
 			]
 		}

@@ -278,6 +278,7 @@ li p {
     width: 90%;
     /* height: 150px; */
     margin-top: 20px;
+    margin-bottom: 20px;
     padding-bottom: 10px;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
@@ -334,6 +335,7 @@ li p {
     padding-top: 0px;
     padding-bottom: 0px;
     text-align: center;
+    font-weight: bold;
     color: rgba(255, 126, 103, 1);
 }
 

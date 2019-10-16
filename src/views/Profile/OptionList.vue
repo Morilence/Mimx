@@ -1,50 +1,50 @@
 <template>
     <ul id="optionList">
         <li class="optionItem">
-            <p @click.self="unfold1($event)">
-                <img src="@/assets/img/profile/OptionList/basicInfo.svg" alt="" @click.self="unfold2($event)">
-                个人信息
+            <p @click.self="unfold('/options/essentialInfo')">
+                <img src="@/assets/img/profile/OptionList/basicInfo.svg" alt="" @click.self="unfold('/options/essentialInfo')">
+                基本信息
             </p>
             <div></div>
         </li>
         <hr>
         <li class="optionItem">
-            <p @click.self="unfold1($event)">
-                <img src="@/assets/img/profile/OptionList/security.svg" alt="" @click.self="unfold2($event)">
+            <p @click.self="unfold('/options/accountSecurity')">
+                <img src="@/assets/img/profile/OptionList/security.svg" alt="" @click.self="unfold('/options/accountSecurity')">
                 账号安全
             </p>
             <div></div>
         </li>
         <hr>
         <li class="optionItem">
-            <p @click.self="unfold1($event)">
-                <img src="@/assets/img/profile/OptionList/setting.svg" alt="" @click.self="unfold2($event)">
+            <p @click.self="unfold('/options/settings')">
+                <img src="@/assets/img/profile/OptionList/setting.svg" alt="" @click.self="unfold('/options/settings')">
                 设置
             </p>
             <div></div>
         </li>
         <hr>
         <li class="optionItem">
-            <p @click.self="unfold1($event)">
-                <img src="@/assets/img/profile/OptionList/about.svg" alt="" @click.self="unfold2($event)">
+            <p @click.self="unfold('/options/about')">
+                <img src="@/assets/img/profile/OptionList/about.svg" alt="" @click.self="unfold('/options/about')">
                 关于
             </p>
             <div>
-                Version: 1.01 Beta/Preview <br>
+                <!-- Version: 1.01 Beta/Preview <br>
                 Developer: Morilence<br>
                 Contact us(me): 1280659615@qq.com<br>
-                Product communication group: <span style="color: red">GUESS</span>
+                Product communication group: <span style="color: red">GUESS</span> -->
             </div>
         </li>
         <hr>
          <li class="optionItem">
-            <p @click.self="unfold1($event)">
-                <img src="@/assets/img/profile/OptionList/sponsor.svg" alt="" @click.self="unfold2($event)">
+            <p @click.self="unfold('/options/Sponsor')">
+                <img src="@/assets/img/profile/OptionList/sponsor.svg" alt="" @click.self="unfold('/options/Sponsor')">
                 无偿资助开发者
             </p>
             <div>
-                <img src="@/assets/img/sponsor/Alipay.jpg" alt="">
-                <img src="@/assets/img/sponsor/WeChat.png" alt="">
+                <!-- <img src="@/assets/img/sponsor/Alipay.jpg" alt="">
+                <img src="@/assets/img/sponsor/WeChat.png" alt=""> -->
             </div>
         </li>
     </ul>
@@ -59,29 +59,12 @@ export default {
             lastActiveEl: null
         }
     },
+    components: {
+
+    },
     methods: {
-        unfold1 (el) {
-            // 存在上一个展开的选项并且和当前点击选项不同
-            if (this.lastActiveEl != null && this.lastActiveEl != el.target) {
-                this.lastActiveEl.parentNode.getElementsByTagName('div')[0].style.display = '';
-            }            
-            if (el.target.parentNode.getElementsByTagName('div')[0].style.display == '') {
-                el.target.parentNode.getElementsByTagName('div')[0].style.display = 'block';
-            } else {
-                el.target.parentNode.getElementsByTagName('div')[0].style.display = '';
-            }
-            this.lastActiveEl = el.target;
-        },
-        unfold2 (el) {
-            if (this.lastActiveEl != null && this.lastActiveEl != el.target.parentNode) {
-                this.lastActiveEl.parentNode.getElementsByTagName('div')[0].style.display = '';
-            }            
-            if (el.target.parentNode.parentNode.getElementsByTagName('div')[0].style.display == '') {
-                el.target.parentNode.parentNode.getElementsByTagName('div')[0].style.display = 'block';
-            } else {
-                el.target.parentNode.parentNode.getElementsByTagName('div')[0].style.display = '';
-            }
-            this.lastActiveEl = el.target.parentNode;
+        unfold (path) {
+            this.$router.push(path);
         }
     }
 }
