@@ -31,9 +31,11 @@
 
 <script>
 import { changeAvatar } from '@/network/profile';
-import { dataURLtoFile } from '@/common/utils';
+import { compress, dataURLtoFile } from '@/common/utils';
 export default {
     name: 'NameCard',
+    components: {
+    },
     data () {
         return {
             avatarUrl: '',
@@ -51,14 +53,25 @@ export default {
     methods: {
         onChange (e) {
             let _this = this;
-            const avatarFile = e.target.files[0];
+            const file = e.target.files[0];
             // 防止用户放弃改换图片而导致获取文件为空
-            if (avatarFile != null) {
-                // 调用同一实例内的methods方法需要加上this.$options.methods前缀（其中this指向实例）
-                this.$options.methods.compressImg(avatarFile).then(res => {
-                    const compressedImg = dataURLtoFile(res, _this.$store.state.userInfo._id + '.png');
-                    // 为uploadImg函数绑定this指向vm实例
-                    _this.$options.methods.uploadImg.bind(_this)(compressedImg);
+            if (file != null) {
+                let n = 1;
+                let avatar = file;
+                if (avatar.size <= 200*1024) {
+                    n = 1;
+                } else if (avatar.size > 200*1024 && avatar.size <= 2*1024*1024) {
+                    n = 3;
+                } else if (avatar.size > 2*1024*1024 && avatar.size <= 5*1024*1024) {
+                    n = 4;
+                } else {
+                    n = 5;
+                }
+                compress(avatar, n).then(res => {
+                    avatar = dataURLtoFile(res, _this.$store.state.userInfo._id + '.png');
+                    console.log('Img size: ', avatar.size);
+                    // 调用同一实例内的methods方法需要加上this.$options.methods前缀（其中this指向实例）
+                    _this.$options.methods.uploadImg.bind(_this)(avatar); // 为uploadImg函数绑定this指向vm实例
                 });
             }
         },
@@ -73,43 +86,9 @@ export default {
                 newUserInfo.avatarUrl = res + '?timestamp=' + (new Date().getTime());
                 _this.$store.commit('setUserInfo', newUserInfo);
                 _this.avatarUrl = _this.$store.state.userInfo.avatarUrl;
-                console.log(_this.avatarUrl);
+                console.log('Upload successfully: ', _this.avatarUrl);
             });
-        },
-        // 压缩图片
-        compressImg (fileObj) {
-            return new Promise( (resolve, reject) => {
-                // 用于存储压缩后的图片base64编码
-                let dataURL = ''
-                const reader = new FileReader();
-                reader.readAsDataURL(fileObj);
-                reader.onload = function(e) {
-                    let image = new Image();
-                    // 加载之前定义回调函数：图片加载完毕后再通过canvas压缩图片，否则图片还没加载完就压缩，结果图片是全黑的
-                    image.onload = function () {    
-                        let canvas = document.createElement('canvas');
-                        // context相当于画笔，里面有各种可以进行绘图的API
-                        let context = canvas.getContext('2d');
-                        let imgWidth = image.width / 3;
-                        let imgHeight = image.height / 3;
-                        canvas.width = imgWidth;
-                        canvas.height = imgHeight;
-                        
-                        //使用drawImage重新设置img标签中的图片大小，实现压缩
-                        context.drawImage(image, 0, 0, imgWidth, imgHeight);
-                        
-                        //使用toDataURL将canvas上的图片转换为base64格式
-                        dataURL = canvas.toDataURL('image/png');
-                        if (image.complete == true) {
-                            resolve(dataURL);
-                        } else {
-                            reject(false);
-                        }
-                    }
-                    image.src = e.target.result;
-                }
-            });
-        },
+        }
     },
     computed: {
         isLogin () {
@@ -274,4 +253,5 @@ export default {
     font-size: 14px;
     color: #909399;
 }
+
 </style>
