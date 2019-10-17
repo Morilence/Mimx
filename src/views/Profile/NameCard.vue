@@ -1,7 +1,7 @@
 <template>
     <div id="nameCard">
         <div id="essentialInfo">
-            <input type="file" name="image" accept="image/*" @change="onChangeAvatar($event)">
+            <input type="file" name="image" accept="image/*" @change="onChange($event)">
             <img :src="avatarUrl" alt="">
             <div>
                 <p>{{ username }}</p>
@@ -31,6 +31,7 @@
 
 <script>
 import { changeAvatar } from '@/network/profile';
+import { dataURLtoFile } from '@/common/utils';
 export default {
     name: 'NameCard',
     data () {
@@ -48,24 +49,67 @@ export default {
         
     },
     methods: {
-        onChangeAvatar (e) {
+        onChange (e) {
             let _this = this;
-            const avatar = e.target.files[0];
+            const avatarFile = e.target.files[0];
             // 防止用户放弃改换图片而导致获取文件为空
-            if (avatar != null) {
-                let formData = new FormData();
-                formData.append('_id', this.$store.state.userInfo._id);
-                formData.append('avatar', avatar);
-                changeAvatar(formData).then(res => {
-                    // 添加时间戳使每次路径请求不同而防止从缓存获取
-                    let newUserInfo = _this.$store.state.userInfo;
-                    newUserInfo.avatarUrl = res + '?timestamp=' + (new Date().getTime());
-                    _this.$store.commit('setUserInfo', newUserInfo);
-                    _this.avatarUrl = _this.$store.state.userInfo.avatarUrl;
-                    console.log(_this.avatarUrl);
+            if (avatarFile != null) {
+                // 调用同一实例内的methods方法需要加上this.$options.methods前缀（其中this指向实例）
+                this.$options.methods.compressImg(avatarFile).then(res => {
+                    const compressedImg = dataURLtoFile(res, _this.$store.state.userInfo._id + '.png');
+                    // 为uploadImg函数绑定this指向vm实例
+                    _this.$options.methods.uploadImg.bind(_this)(compressedImg);
                 });
             }
-        }
+        },
+        uploadImg (fileObj) {
+            let _this = this;
+            let formData = new FormData();
+            formData.append('_id', this.$store.state.userInfo._id);
+            formData.append('avatar', fileObj);
+            changeAvatar(formData).then(res => {
+                // 添加时间戳使每次路径请求不同而防止从缓存获取
+                let newUserInfo = _this.$store.state.userInfo;
+                newUserInfo.avatarUrl = res + '?timestamp=' + (new Date().getTime());
+                _this.$store.commit('setUserInfo', newUserInfo);
+                _this.avatarUrl = _this.$store.state.userInfo.avatarUrl;
+                console.log(_this.avatarUrl);
+            });
+        },
+        // 压缩图片
+        compressImg (fileObj) {
+            return new Promise( (resolve, reject) => {
+                // 用于存储压缩后的图片base64编码
+                let dataURL = ''
+                const reader = new FileReader();
+                reader.readAsDataURL(fileObj);
+                reader.onload = function(e) {
+                    let image = new Image();
+                    // 加载之前定义回调函数：图片加载完毕后再通过canvas压缩图片，否则图片还没加载完就压缩，结果图片是全黑的
+                    image.onload = function () {    
+                        let canvas = document.createElement('canvas');
+                        // context相当于画笔，里面有各种可以进行绘图的API
+                        let context = canvas.getContext('2d');
+                        let imgWidth = image.width / 3;
+                        let imgHeight = image.height / 3;
+                        canvas.width = imgWidth;
+                        canvas.height = imgHeight;
+                        
+                        //使用drawImage重新设置img标签中的图片大小，实现压缩
+                        context.drawImage(image, 0, 0, imgWidth, imgHeight);
+                        
+                        //使用toDataURL将canvas上的图片转换为base64格式
+                        dataURL = canvas.toDataURL('image/png');
+                        if (image.complete == true) {
+                            resolve(dataURL);
+                        } else {
+                            reject(false);
+                        }
+                    }
+                    image.src = e.target.result;
+                }
+            });
+        },
     },
     computed: {
         isLogin () {

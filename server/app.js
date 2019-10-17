@@ -101,7 +101,7 @@ router
                 followNum: 0,
                 collectNum: 0,
                 fanNum: 0,
-                avatarUrl: '/resource/avatar/default.svg'
+                avatarUrl: '/resource/avatar/default.png'
             });
             ctx.body = true;
         }
