@@ -1,7 +1,7 @@
 <template>
     <div id="nameCard">
         <div id="essentialInfo">
-            <input type="file" name="image" accept="image/*" @change="onChange($event)">
+            <input type="file" name="image" accept="image/jpg,image/jpeg,image/png" @change="onChange($event)">
             <img :src="avatarUrl" alt="">
             <div>
                 <p>{{ username }}</p>
@@ -56,16 +56,38 @@ export default {
             const file = e.target.files[0];
             // 防止用户放弃改换图片而导致获取文件为空
             if (file != null) {
+                if (file.size > 30*1024*1024) {
+                    alert('文件过大，请选择大小低于30M的图片！');
+                    return ;
+                }
                 let n = 1;
                 let avatar = file;
-                if (avatar.size <= 200*1024) {
-                    n = 1;
-                } else if (avatar.size > 200*1024 && avatar.size <= 2*1024*1024) {
-                    n = 3;
-                } else if (avatar.size > 2*1024*1024 && avatar.size <= 5*1024*1024) {
+                if (avatar.size <= 100*1024) {
+                    n = 2;
+                } else if (avatar.size > 100*1024 && avatar.size <= 1*1024*1024) {
+                    n = 3.5;
+                } else if (avatar.size > 1*1024*1024 && avatar.size <= 3*1024*1024) {
                     n = 4;
-                } else {
+                } else if (avatar.size > 3*1024*1024 && avatar.size <= 5*1024*1024) {
+                    n = 4.5;
+                } else if (avatar.size > 5*1024*1024 && avatar.size <= 7*1024*1024) {
                     n = 5;
+                } else if (avatar.size > 7*1024*1024 && avatar.size <= 9*1024*1024) {
+                    n = 5.5;
+                } else if (avatar.size > 9*1024*1024 && avatar.size <= 11*1024*1024) {
+                    n = 6;
+                } else if (avatar.size > 11*1024*1024 && avatar.size <= 13*1024*1024) {
+                    n = 6.5;
+                } else if (avatar.size > 13*1024*1024 && avatar.size <= 15*1024*1024) {
+                    n = 7;
+                } else if (avatar.size > 15*1024*1024 && avatar.size <= 17*1024*1024) {
+                    n = 7.5;
+                } else if (avatar.size > 17*1024*1024 && avatar.size <= 19*1024*1024) {
+                    n = 8;
+                } else if (avatar.size > 19*1024*1024 && avatar.size <= 21*1024*1024) {
+                    n = 8.5;
+                } else {
+                    n = 10;
                 }
                 compress(avatar, n).then(res => {
                     avatar = dataURLtoFile(res, _this.$store.state.userInfo._id + '.png');
