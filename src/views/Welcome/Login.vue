@@ -27,9 +27,10 @@ export default {
     methods: {
         login () {
             let _this = this;
-
             if (this.enteredUsername != '' && this.enteredPassword != '') {
+                this.$store.commit('setIsLoading', true);
                 sendLoginData(this.enteredUsername, this.enteredPassword).then(res => {
+                    _this.$store.commit('setIsLoading', false);
                     if (res.isLogin) {
                         // 用户勾选记住用户名和密码
                         if (localStorage.getItem('isRemUP') == 'true') {

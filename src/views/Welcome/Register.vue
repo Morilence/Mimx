@@ -25,10 +25,11 @@ export default {
     methods: {
         register () {
             let _this = this; 
-            
             if (this.enteredUsername != '' && this.enteredPassword != '') {
                 if (this.enteredPassword == this.enteredPwdConfirm) {
+                    this.$store.commit('setIsLoading', true);
                     sendRegData(this.enteredUsername, this.enteredPassword).then(res => {
+                        _this.$store.commit('setIsLoading', false);
                         if (res) {
                             _this.$router.replace('/welcome/login');
                             console.log('Register successfully.');

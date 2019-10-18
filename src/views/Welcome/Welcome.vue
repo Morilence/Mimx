@@ -2,17 +2,20 @@
     <div>
         <router-view></router-view>
         <a href="" @click.prevent="skipin">skipin 4 local dev</a>
+        <ball-spin-fade-loader v-show="this.$store.state.isLoading"/>
     </div>
 </template>
 
 <script>
+import BallSpinFadeLoader from '@/components/common/Loaders/BallSpinFadeLoader';
 import Login from '@/views/Welcome/Login';
 import Reigister from '@/views/Welcome/Register';
 export default {
     name: '',
     components: {
         Login,
-        Reigister
+        Reigister,
+        BallSpinFadeLoader
     },
     data () {
         return {

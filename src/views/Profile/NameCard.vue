@@ -1,7 +1,7 @@
 <template>
     <div id="nameCard">
         <div id="essentialInfo">
-            <input type="file" name="image" accept="image/jpg,image/jpeg,image/png" @change="onChange($event)">
+            <input type="file" name="image" accept="image/*" @change="onChange($event)">
             <img :src="avatarUrl" alt="">
             <div>
                 <p>{{ username }}</p>
@@ -35,6 +35,7 @@ import { compress, dataURLtoFile } from '@/common/utils';
 export default {
     name: 'NameCard',
     components: {
+        
     },
     data () {
         return {
@@ -60,6 +61,8 @@ export default {
                     alert('文件过大，请选择大小低于30M的图片！');
                     return ;
                 }
+                // 开始显示加载视图
+                this.$store.commit('setIsLoading', true);
                 let n = 1;
                 let avatar = file;
                 if (avatar.size <= 100*1024) {
@@ -91,7 +94,7 @@ export default {
                 }
                 compress(avatar, n).then(res => {
                     avatar = dataURLtoFile(res, _this.$store.state.userInfo._id + '.png');
-                    console.log('Img size: ', avatar.size);
+                    console.log('Size of Img: ', avatar.size);
                     // 调用同一实例内的methods方法需要加上this.$options.methods前缀（其中this指向实例）
                     _this.$options.methods.uploadImg.bind(_this)(avatar); // 为uploadImg函数绑定this指向vm实例
                 });
@@ -108,6 +111,8 @@ export default {
                 newUserInfo.avatarUrl = res + '?timestamp=' + (new Date().getTime());
                 _this.$store.commit('setUserInfo', newUserInfo);
                 _this.avatarUrl = _this.$store.state.userInfo.avatarUrl;
+                // 完成后关闭加载视图
+                _this.$store.commit('setIsLoading', false);
                 console.log('Upload successfully: ', _this.avatarUrl);
             });
         }

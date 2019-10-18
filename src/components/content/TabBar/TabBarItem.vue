@@ -37,7 +37,6 @@ export default {
                 return;
             }
             this.$router.replace(this.path);
-            this.$store.state.latestStay = this.path;
         }
     }
 }

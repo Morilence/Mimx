@@ -1,4 +1,5 @@
 import axios from 'axios';
+import store from '@/store/store';
 
 export function request(config) {
     // 创建实例，同时对该实例进行一些基本的配置
@@ -12,6 +13,8 @@ export function request(config) {
         // 执行完操作后定要return config;不然请求将被拦截
         return config;
     },error => {
+        // 请求失败的一系列操作
+        store.commit('setIsLoading', false);
         return Promise.reject(error);
     });
 
@@ -20,6 +23,8 @@ export function request(config) {
         // 执行完操作后定要return response;不然then中将获取不到数据
         return response.data;
     },error => {
+        // 响应错误失败的一系列操作
+        store.commit('setIsLoading', false);
         return Promise.reject(error);
     });
 

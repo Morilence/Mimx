@@ -7,7 +7,7 @@
                 <p slot="item-text">Chat</p>
             </tab-bar-item>
             <div class="tabBarBtn">
-                <img :src="this.$store.state.createUrl" alt="" @click="switchGloveBox">
+                <img :src="fireImgUrl" alt="" @click="switchGloveBox">
             </div>
             <tab-bar-item path="/main/explore">
                 <img slot="item-icon" src="@/assets/img/TabBar/explore.svg" alt="">
@@ -30,16 +30,17 @@ export default {
     },
     data () {
         return {
+            fireImgUrl: require('@/assets/img/TabBar/create.svg')
         }
     },
     methods: {
         switchGloveBox () {
             if (this.$store.state.isGloveBoxDisplay) {
                 this.$store.commit('setIsGloveBoxDisplay', false);
-                this.$store.commit('setCreateUrl', require('@/assets/img/TabBar/create.svg'));
+                this.fireImgUrl = require('@/assets/img/TabBar/create.svg');
             } else {
                 this.$store.commit('setIsGloveBoxDisplay', true);
-                this.$store.commit('setCreateUrl', require('@/assets/img/TabBar/create_active.svg'));
+                this.fireImgUrl = require('@/assets/img/TabBar/create_active.svg');
             }
         }
     }
