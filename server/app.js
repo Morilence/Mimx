@@ -80,6 +80,34 @@ router
         await DB.update('users', {'_id': ObjectId(avrData._id)}, {'avatarUrl': newAvatarUrl});
         ctx.body = newAvatarUrl;
     })
+    .post('/changeInfo', async ctx => {
+        let infoData = ctx.request.body;
+        let flag = false;
+        // 先判断要修改的用户名是不是已经存在了
+        await DB.find('users', {'username': infoData.username}).then( res => {
+            if (res.length == 0) {
+                flag = true;
+            } else {
+                // 已存在,先判断是不是自己（即用户名并未做改动）
+                // 如果是自己当然也得允许！
+                if (res[0].username == infoData.username) {
+                    flag = true;
+                } else {
+                    ctx.body = -1;
+                }
+            }
+        });
+        if (flag == true) {
+            // 未存在则修改，此时需要用_id作为查询条件
+            await DB.update('users', {'_id': ObjectId(infoData._id)}, {
+                'username': infoData.username,
+                'age': infoData.age, 
+                'gender': infoData.gender, 
+                'email': infoData.email,
+            });
+            ctx.body = 1;
+        }
+    })
     .post('/register', async ctx => {
         let regData = ctx.request.body;
         let flag = false;
@@ -97,6 +125,7 @@ router
                 age: 0, 
                 gender: '', 
                 level: 0,
+                email: '',
                 issueNum: 0,
                 followNum: 0,
                 collectNum: 0,

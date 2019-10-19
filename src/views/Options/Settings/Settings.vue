@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="settings">
         <title-bar :backImgPath="require('@/assets/img/common/left_w.svg')" :menuImgPath="require('@/assets/img/common/menu_w.svg')" title="设置" titleColor="#fafafa" bgColor="rgba(255, 126, 103, 1)" :isShadow="true"></title-bar>
     </div>
 </template>
@@ -15,5 +15,7 @@ export default {
 </script>
 
 <style scoped>
-
+#settings {
+    margin-top: 65px;
+}
 </style>

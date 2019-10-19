@@ -12,6 +12,7 @@ const Explore = () => import('@/views/Main/Explore/Explore');
 const Profile = () => import('@/views/Profile/Profile');
 
 const Options = () => import('@/views/Options/Options');
+const IndividualSpace = () => import('@/views/Options/IndividualSpace/IndividualSpace');
 const EssentialInfo = () => import('@/views/Options/EssentialInfo/EssentialInfo');
 const AccountSecurity = () => import('@/views/Options/AccountSecurity/AccountSecurity');
 const Settings = () => import('@/views/Options/Settings/Settings');
@@ -124,6 +125,10 @@ export default new Router({
 			},
 			children: [
 				{
+					path: 'individualSpace',
+					component: IndividualSpace
+				},
+				{
 					path: 'essentialInfo',
 					component: EssentialInfo
 				},
@@ -140,7 +145,7 @@ export default new Router({
 					component: About
 				},
 				{
-					path: 'Sponsor',
+					path: 'sponsor',
 					component: Sponsor
 				}
 			]

@@ -1,9 +1,17 @@
 <template>
     <ul id="optionList">
         <li class="optionItem">
+            <p @click.self="unfold('/options/individualSpace')">
+                <img src="@/assets/img/profile/OptionList/individualSpace.svg" alt="" @click.self="unfold('/options/individualSpace')">
+                个人空间
+            </p>
+            <div></div>
+        </li>
+        <hr>
+        <li class="optionItem">
             <p @click.self="unfold('/options/essentialInfo')">
                 <img src="@/assets/img/profile/OptionList/basicInfo.svg" alt="" @click.self="unfold('/options/essentialInfo')">
-                基本信息
+                基本资料
             </p>
             <div></div>
         </li>
@@ -34,17 +42,6 @@
                 Developer: Morilence<br>
                 Contact us(me): 1280659615@qq.com<br>
                 Product communication group: <span style="color: red">GUESS</span> -->
-            </div>
-        </li>
-        <hr>
-         <li class="optionItem">
-            <p @click.self="unfold('/options/Sponsor')">
-                <img src="@/assets/img/profile/OptionList/sponsor.svg" alt="" @click.self="unfold('/options/Sponsor')">
-                无偿资助开发者
-            </p>
-            <div>
-                <!-- <img src="@/assets/img/sponsor/Alipay.jpg" alt="">
-                <img src="@/assets/img/sponsor/WeChat.png" alt=""> -->
             </div>
         </li>
     </ul>
@@ -125,23 +122,12 @@ export default {
     font-size: 12px;
 }
 
-.optionItem div img {
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-
-    width: auto;
-    height: auto;
-    max-width: 95%;
-    max-height: 100%;
-    
-}
-
 hr {
     position: relative;
     left: 50%;
     transform: translateX(-50%);
 
     margin: 0;
+    width: 95%;
 }
 </style>

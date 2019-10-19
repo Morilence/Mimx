@@ -7,3 +7,11 @@ export function changeAvatar(formData) {
         data: formData
     });
 }
+
+export function changeInfo(formData) {
+    return request({
+        method: 'post',
+        url: '/changeInfo',
+        data: formData
+    });
+}
