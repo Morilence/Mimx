@@ -53,7 +53,7 @@ export default {
     methods: {
     
     },
-    mounted () {
+    created () {
         let _this = this;
         this.$store.commit('setIsLoading', true);
         let targetName = this.$route.params.targetName;

@@ -2,7 +2,7 @@
     <ul id="optionList">
         <li class="optionItem">
             <p @click.self="unfold({name:'IndividualSpace', path: '/options/individualSpace', params: {targetName: curUsername}})">
-                <img src="@/assets/img/profile/OptionList/individualSpace.svg" alt="" @click.self="unfold('/options/individualSpace')">
+                <img src="@/assets/img/profile/OptionList/individualSpace.svg" alt="" @click.self="unfold({name:'IndividualSpace', path: '/options/individualSpace', params: {targetName: curUsername}})">
                 个人空间
             </p>
             <div></div>
