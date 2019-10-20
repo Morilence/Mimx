@@ -36,10 +36,10 @@ class Db {
         }); 
     }
 
-    find (collectionName, json) {
+    find (collectionName, cjson, ajson={}) {
         return new Promise( (resolve, reject) => {
             this.connect().then( (db) => {
-                let result = db.collection(collectionName).find(json);
+                let result = db.collection(collectionName).find(cjson).project(ajson);
                 // 遍历结果
                 result.toArray(function (err, docs) {
                     if (err) {

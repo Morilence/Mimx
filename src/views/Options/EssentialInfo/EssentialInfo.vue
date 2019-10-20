@@ -34,6 +34,11 @@
             <li>
                 <p><span>邮箱</span><input type="text" v-model="email" :readonly="isEdit ? false:'readonly'" maxlength=""></p>
             </li>
+            <hr>
+            <li>
+                <p><span>简介 :</span></p>
+                <textarea placeholder="简单介绍一下你自己吧！" v-model="intro" :readonly="isEdit ? false:'readonly'" maxlength="60"></textarea>
+            </li>
         </ul>
         <title-bar :backImgPath="require('@/assets/img/common/left_w.svg')" :menuImgPath="editImgUrl" title="基本资料" titleColor="#fafafa" bgColor="rgba(255, 126, 103, 1)" :isShadow="true" @onReact="judgeReact"></title-bar>
     </div>
@@ -55,7 +60,8 @@ export default {
             level: 0,
             gender: '',
             age: '',
-            email: ''
+            email: '',
+            intro: '',
         }
     },
     computed: {
@@ -64,6 +70,8 @@ export default {
                 return this.isEdit ? require('@/assets/img/common/check_w.svg') : require('@/assets/img/common/edit_w.svg');
             }
         }
+    },
+    watch: {
     },
     methods: {
         judgeReact (isReact) {
@@ -80,6 +88,7 @@ export default {
                 formData.append('gender', this.gender);
                 formData.append('age', this.age);
                 formData.append('email', this.email);
+                formData.append('intro', this.intro);
                 this.$options.methods.uploadInfo.bind(this)(formData);
             }
             // console.log('EssentialInfo:', this.isEdit);
@@ -95,6 +104,7 @@ export default {
                     newUserInfo.gender = formData.get('gender');
                     newUserInfo.age = formData.get('age');
                     newUserInfo.email = formData.get('email');
+                    newUserInfo.intro = formData.get('intro');
                     _this.$store.commit('setUserInfo', newUserInfo);
                     // 方便用户帮其把用户名的登陆记忆给改成新用户
                     if (localStorage.getItem('isRemUP') == 'true') {
@@ -113,6 +123,7 @@ export default {
                     _this.gender = _this.$store.state.userInfo.gender;
                     _this.age = _this.$store.state.userInfo.age;
                     _this.email = _this.$store.state.userInfo.email;
+                    _this.intro = _this.$store.state.userInfo.intro;
                 }
             });
         }
@@ -124,6 +135,7 @@ export default {
         this.gender = this.$store.state.userInfo.gender;
         this.age = this.$store.state.userInfo.age;
         this.email = this.$store.state.userInfo.email;
+        this.intro = this.$store.state.userInfo.intro;
     }
 }
 </script>
@@ -146,6 +158,10 @@ ul {
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+}
+
+ul:nth-child(2) {
+    margin-bottom: 20px;
 }
 
 li {
@@ -185,6 +201,23 @@ li p input {
     outline: none;
 
     text-align: right;
+    color: #606266;
+}
+
+li textarea {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 100%;
+    height: 90px;
+    overflow-y: visible;
+    padding: 5px 15px 5px 15px;
+    border: none;
+    outline: none;
+
+    text-align: center;
+    font-size: 15px;
     color: #606266;
 }
 

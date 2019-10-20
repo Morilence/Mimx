@@ -1,7 +1,7 @@
 <template>
     <ul id="optionList">
         <li class="optionItem">
-            <p @click.self="unfold('/options/individualSpace')">
+            <p @click.self="unfold({name:'IndividualSpace', path: '/options/individualSpace', params: {targetName: curUsername}})">
                 <img src="@/assets/img/profile/OptionList/individualSpace.svg" alt="" @click.self="unfold('/options/individualSpace')">
                 个人空间
             </p>
@@ -54,6 +54,11 @@ export default {
     data () {
         return {
             lastActiveEl: null
+        }
+    },
+    computed: {
+        curUsername () {
+            return this.$store.state.userInfo.username;
         }
     },
     components: {

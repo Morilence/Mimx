@@ -125,8 +125,9 @@ export default new Router({
 			},
 			children: [
 				{
+					name: 'IndividualSpace',
 					path: 'individualSpace',
-					component: IndividualSpace
+					component: IndividualSpace,
 				},
 				{
 					path: 'essentialInfo',

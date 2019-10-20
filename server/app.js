@@ -53,7 +53,7 @@ router
         ctx.render('index');
     })
     .get('/getSearchResults', async ctx => {
-        await DB.find('users', {'username': new RegExp(ctx.query.searchKey)}).then( res => {
+        await DB.find('users', {'username': new RegExp(ctx.query.searchKey)}, {'password': 0}).then( res => {
             ctx.body = res;
         });
     })
@@ -61,6 +61,11 @@ router
         await DB.aggregate('users', [{ $sample: { size: Number(ctx.query.recommendNum) } }]).then( res => {
             ctx.body = res;
         });
+    })
+    .get('/getInfo', async ctx => {
+        await DB.find('users', {'username': ctx.query.targetName}, {'password': 0}).then( res => {
+            ctx.body = res[0];
+        })
     })
     .post('/changeAvatar', async ctx => {
         let avrData = ctx.request.body;
@@ -84,7 +89,7 @@ router
         let infoData = ctx.request.body;
         let flag = false;
         // 先判断要修改的用户名是不是已经存在了
-        await DB.find('users', {'username': infoData.username}).then( res => {
+        await DB.find('users', {'username': infoData.username}, {'username': 1}).then( res => {
             if (res.length == 0) {
                 flag = true;
             } else {
@@ -104,6 +109,7 @@ router
                 'age': infoData.age, 
                 'gender': infoData.gender, 
                 'email': infoData.email,
+                'intro': infoData.intro
             });
             ctx.body = 1;
         }
@@ -111,7 +117,7 @@ router
     .post('/register', async ctx => {
         let regData = ctx.request.body;
         let flag = false;
-        await DB.find('users', {'username': regData.username}).then( res => {
+        await DB.find('users', {'username': regData.username}, {'username': 1}).then( res => {
             if (res.length == 0) {
                 flag = true;
             } else {
@@ -123,6 +129,7 @@ router
                 username: regData.username, 
                 password: regData.password, 
                 age: 0, 
+                birthday: '',
                 gender: '', 
                 level: 0,
                 email: '',
@@ -130,7 +137,8 @@ router
                 followNum: 0,
                 collectNum: 0,
                 fanNum: 0,
-                avatarUrl: '/resource/avatar/default.png'
+                avatarUrl: '/resource/avatar/default.png',
+                intro: ''
             });
             ctx.body = true;
         }

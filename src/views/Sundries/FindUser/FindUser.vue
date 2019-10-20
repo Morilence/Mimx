@@ -5,7 +5,7 @@
                 <input type="search" name="" id="" maxlength="25" v-model="searchKey">
                 <img src="@/assets/img/common/search_c.svg" alt="" @click="searchUser">
             </div>
-            <li v-for="(user, index) in findList" :key="user.username" v-show="isDisplay(index)">
+            <li v-for="(user, index) in findList" :key="user.username" v-show="isDisplay(index)" @click="visit(user.username)">
                 <img :src="user.avatarUrl" alt="">
                 <p>{{ user.username }}</p>
             </li>
@@ -20,7 +20,7 @@
         <div id="recommendPanel">
             <label>推荐用户</label>
             <hr>
-            <li v-for="(user) in recommendList" :key="user.username">
+            <li v-for="(user) in recommendList" :key="user.username" @click="visit(user.username)">
                 <img :src="user.avatarUrl" alt="">
                 <p>{{ user.username }}</p>
             </li>
@@ -108,6 +108,16 @@ export default {
                 _this.isFlip = false;
                 _this.findTempList = [];
             }
+        },
+        visit (userame) {
+            this.$router.push({
+                // 在定义路由时需要指定name，否则则无法传递参数
+                name: 'IndividualSpace',
+                path: '/options/individualSpace',
+                params: {
+                    targetName: userame
+                }
+            });
         }
     },
     watch: {

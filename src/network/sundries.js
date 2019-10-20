@@ -19,3 +19,13 @@ export function getRecommendUsers(num) {
         }
     });
 }
+
+export function getInfo(un) {
+    return request({
+        method: 'get',
+        url: '/getInfo',
+        params: {
+            targetName: un
+        }
+    });
+}
