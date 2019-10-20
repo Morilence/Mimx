@@ -4,8 +4,6 @@ import router from './router/router'
 import store from './store/store'
 import VueSocketIO from 'vue-socket.io'
 
-Vue.config.productionTip = false;
-
 // 在进行界面测试时要关上
 // Vue.use(new VueSocketIO({
 //     debug: true,
@@ -18,6 +16,14 @@ Vue.config.productionTip = false;
 //     }
 // }));
 
+// 下面是自封装插件引用和安装
+import tinyToast from '@/components/common/Toasts/TinyToast';
+
+Vue.use(tinyToast);
+
+Vue.config.productionTip = false;
+
+// 在每次路由跳转之前判断用户有没有登陆
 router.beforeEach((to, from, next) => {
 	if (to.meta.requireAuth) {
 		if (store.state.isLogin == true) {

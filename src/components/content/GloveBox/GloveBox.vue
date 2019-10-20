@@ -20,7 +20,6 @@ export default {
     methods: {
         closeGloveBox () {
             this.$store.commit('setIsGloveBoxDisplay', false);
-            this.$store.commit('setCreateUrl', require('@/assets/img/TabBar/create.svg'));
         }
     }
 }

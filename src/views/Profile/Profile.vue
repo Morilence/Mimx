@@ -5,7 +5,6 @@
         <option-list></option-list>
         <button id="logoutBtn" @click="logout">logout</button>
         <title-bar :backImgPath="require('@/assets/img/common/left_w.svg')" :menuImgPath="require('@/assets/img/common/menu_w.svg')" title="我" titleColor="#fafafa" bgColor="rgba(255, 126, 103, 1)" :isShadow="true"></title-bar>
-        <ball-spin-fade-loader v-show="this.$store.state.isLoading"/>
     </div>
 </template>
 
@@ -13,14 +12,12 @@
 import TitleBar from '@/components/common/TitleBar';
 import NameCard from '@/views/Profile/NameCard';
 import OptionList from '@/views/Profile/OptionList';
-import BallSpinFadeLoader from '@/components/common/Loaders/BallSpinFadeLoader';
 export default {
     name: 'Profile',
     components: {
         NameCard,
         OptionList,
         TitleBar,
-        BallSpinFadeLoader
     },
     data () {
         return {

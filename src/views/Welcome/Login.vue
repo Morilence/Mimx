@@ -45,12 +45,14 @@ export default {
                         // _this.$socket.emit('message', _this.enteredUsername+' is online.');
                         console.log('Login successfully.');
                     } else {
-                        alert('Wrong account or password!');
+                        _this.$tinyToast({content: 'Wrong account or password!', duration: 2000});
+                        // alert('Wrong account or password!');
                         console.log('Login failed.');
                     }
                 });
             } else {
-                alert('Input cannot be empty!');
+                // alert('Input cannot be empty!');
+                this.$tinyToast({content: 'Input cannot be empty!', duration: 2000});
             }
         },
         // 让密码输入框在未获取焦点的时候为仅读模式，防止浏览器自动填充表单

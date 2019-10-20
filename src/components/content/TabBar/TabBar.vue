@@ -33,15 +33,35 @@ export default {
             fireImgUrl: require('@/assets/img/TabBar/create.svg')
         }
     },
+    // 监听GloveBox的显示情况来决定火焰图标的显示
+    computed: {
+        isGloveBoxDisplay () {
+            return this.$store.state.isGloveBoxDisplay;
+        }
+    },
+    watch: {
+        isGloveBoxDisplay (newVal) {
+            if (newVal) {
+                this.fireImgUrl = require('@/assets/img/TabBar/create_active.svg');
+            } else {
+                this.fireImgUrl = require('@/assets/img/TabBar/create.svg');
+            }
+        }
+    },
     methods: {
         switchGloveBox () {
             if (this.$store.state.isGloveBoxDisplay) {
                 this.$store.commit('setIsGloveBoxDisplay', false);
-                this.fireImgUrl = require('@/assets/img/TabBar/create.svg');
             } else {
                 this.$store.commit('setIsGloveBoxDisplay', true);
-                this.fireImgUrl = require('@/assets/img/TabBar/create_active.svg');
             }
+        }
+    },
+    created () {
+        if (this.$store.state.isGloveBoxDisplay) {
+            this.fireImgUrl = require('@/assets/img/TabBar/create_active.svg');
+        } else {
+            this.fireImgUrl = require('@/assets/img/TabBar/create.svg');
         }
     }
 }

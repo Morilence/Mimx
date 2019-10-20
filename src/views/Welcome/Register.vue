@@ -32,17 +32,21 @@ export default {
                         _this.$store.commit('setIsLoading', false);
                         if (res) {
                             _this.$router.replace('/welcome/login');
+                            this.$tinyToast({content: 'Register successfully.', duration: 2000});
                             console.log('Register successfully.');
                         } else {
-                            alert('The username already exists!');
+                            // alert('The username already exists!');
+                            this.$tinyToast({content: 'The username already exists!', duration: 2000});
                             console.log('Register failed.');
                         }
                     });
                 } else {
-                    alert('Entered passwords differ!');
+                    // alert('Entered passwords differ!');
+                    this.$tinyToast({content: 'Entered passwords differ!', duration: 2000});
                 }
             } else {
-                alert('Input cannot be empty!');
+                // alert('Input cannot be empty!');
+                this.$tinyToast({content: 'Input cannot be empty!', duration: 2000});
             }
         },
         pwdGetFocus (el) {

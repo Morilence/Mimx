@@ -3,15 +3,17 @@
 		<keep-alive>
 			<router-view v-if="$route.meta.keepalive"></router-view>
 		</keep-alive>
-		<router-view v-if="!$route.meta.keepalive"></router-view> 
+		<router-view v-if="!$route.meta.keepalive"></router-view>
+		<ball-spin-fade-loader v-show="this.$store.state.isLoading"/>
 	</div>
 </template>
 
 <script>
-
+import BallSpinFadeLoader from '@/components/common/Loaders/BallSpinFadeLoader';
 export default {
 	name: 'app',
 	components: {
+		BallSpinFadeLoader
 	},
 	data () {
 		return {

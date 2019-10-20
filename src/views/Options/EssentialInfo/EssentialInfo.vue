@@ -35,7 +35,7 @@
                 <p><span>邮箱</span><input type="text" v-model="email" :readonly="isEdit ? false:'readonly'" maxlength=""></p>
             </li>
         </ul>
-        <title-bar :backImgPath="require('@/assets/img/common/left_w.svg')" :menuImgPath="editImgUrl" title="基本信息" titleColor="#fafafa" bgColor="rgba(255, 126, 103, 1)" :isShadow="true" @onReact="judgeReact"></title-bar>
+        <title-bar :backImgPath="require('@/assets/img/common/left_w.svg')" :menuImgPath="editImgUrl" title="基本资料" titleColor="#fafafa" bgColor="rgba(255, 126, 103, 1)" :isShadow="true" @onReact="judgeReact"></title-bar>
     </div>
 </template>
 
@@ -100,11 +100,14 @@ export default {
                     if (localStorage.getItem('isRemUP') == 'true') {
                         localStorage.setItem('unm', newUserInfo.username);
                     }
+                    this.$tinyToast({content: 'Modify successfully.', duration: 2000});
                 } else {
                     if (res == -1) {
-                        alert('修改失败（用户名已存在）！');
+                        // alert('修改失败（用户名已存在）！');
+                        this.$tinyToast({content: 'Modify failed! (username already exists)', duration: 2000});
                     } else {
-                        alert('修改失败（未知错误）！');
+                        // alert('修改失败（未知错误）！');
+                        this.$tinyToast({content: 'Modify failed! (unknown error)', duration: 2000});
                     }
                     _this.username = _this.$store.state.userInfo.username;
                     _this.gender = _this.$store.state.userInfo.gender;

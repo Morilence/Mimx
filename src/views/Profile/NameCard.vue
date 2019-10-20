@@ -58,7 +58,8 @@ export default {
             // 防止用户放弃改换图片而导致获取文件为空
             if (file != null) {
                 if (file.size > 30*1024*1024) {
-                    alert('文件过大，请选择大小低于30M的图片！');
+                    // alert('文件过大，请选择大小低于30M的图片！');
+                    this.$tinyToast({content: 'The file is too big, please upload a picture smaller than 30M!', duration: 2000});
                     return ;
                 }
                 // 开始显示加载视图
@@ -113,6 +114,7 @@ export default {
                 _this.avatarUrl = _this.$store.state.userInfo.avatarUrl;
                 // 完成后关闭加载视图
                 _this.$store.commit('setIsLoading', false);
+                this.$tinyToast({content: 'Upload successfully.', duration: 2000});
                 console.log('Upload successfully: ', _this.avatarUrl);
             });
         }

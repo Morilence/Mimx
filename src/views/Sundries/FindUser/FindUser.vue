@@ -146,6 +146,7 @@ export default {
     },
     created () {
         let _this = this;
+        this.$store.commit('setIsLoading', true);
         getRecommendUsers(5).then(res => {
             let targetNum = 5;
             let resAfterFiltration = [];
@@ -163,6 +164,7 @@ export default {
                     flag = true;
                 }
             }
+            _this.$store.commit('setIsLoading', false);
             // 确保推荐的人数相同，若出现自己则删除直接返回，若未出现则删除最后一个以达目的
             if (flag) {
                 this.recommendList = resAfterFiltration;
