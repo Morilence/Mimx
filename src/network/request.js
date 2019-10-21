@@ -4,7 +4,7 @@ import store from '@/store/store';
 export function request(config) {
     // 创建实例，同时对该实例进行一些基本的配置
     const instance = axios.create({
-        baseURL: 'http://39.105.51.214:3000',
+        baseURL: 'http://127.0.0.1:3000',
         timeout: 5000,
     });
 

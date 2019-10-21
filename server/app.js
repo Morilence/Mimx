@@ -67,6 +67,53 @@ router
             ctx.body = res[0];
         })
     })
+    .get('/getFollowRelation', async ctx => {
+        await DB.find('follow_relation', {'follower': ctx.query.follower, 'followee': ctx.query.followee }).then( res => {
+            if (res.length == 0) {
+                ctx.body = false;
+            } else {
+                ctx.body = true;
+            }
+        })
+    })
+    .get('/changeFollowRelation', async ctx => {
+        let flag = false;
+        // aod等于true则表示添加关系
+        if (ctx.query.aod == 'true') {
+            await DB.insert('follow_relation', {
+                follower: ctx.query.follower,
+                followee: ctx.query.followee
+            });
+            flag = true;
+        } else if (ctx.query.aod == 'false') {
+            await DB.remove('follow_relation', {
+                follower: ctx.query.follower,
+                followee: ctx.query.followee
+            });
+            flag = false;
+        } else {
+            ctx.body = false;
+        }
+        let followee_fanNum = 0, follower_followNum = 0;
+        await DB.find('users', {'_id': ObjectId(ctx.query.follower)}, {'followNum': 1}).then(res => {
+            follower_followNum = Number(res[0].followNum);
+        })
+        await DB.find('users', {'_id': ObjectId(ctx.query.followee)}, {'fanNum': 1}).then(res => {
+            followee_fanNum = Number(res[0].fanNum);
+        })
+        // flag为true表明要为被关注的用户的粉丝数加一（以及关注用户的关注数加一），为false则相反减一
+        if (flag) {
+            follower_followNum++;
+            followee_fanNum++;
+        } else {
+            follower_followNum--;
+            followee_fanNum--;
+        }
+        await DB.update('users', {'_id': ObjectId(ctx.query.follower)}, { followNum: follower_followNum });
+        await DB.update('users', {'_id': ObjectId(ctx.query.followee)}, { fanNum: followee_fanNum });
+        // 把新的粉丝数返回以便更新
+        ctx.body = {isOk: true, followee_fanNum: followee_fanNum, follower_followNum: follower_followNum};
+    })
     .post('/changeAvatar', async ctx => {
         let avrData = ctx.request.body;
         let file = ctx.request.files.avatar; // 获取上传文件

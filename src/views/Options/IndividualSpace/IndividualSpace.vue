@@ -3,7 +3,10 @@
         <div id="background-container">
             <div id="infoPanel">
                 <img :src="avatarUrl" alt="">
-                <div> {{ username }} <img :src="genderImgUrl" alt=""> </div>
+                <div> 
+                    <p>{{ username }}</p>  
+                    <img :src="genderImgUrl" alt=""> 
+                </div>
                 <p>
                     <span>Lv: {{ level }}</span>|
                     <span>关注: {{ followNum }}</span>|
@@ -13,12 +16,17 @@
             </div>
         </div>
         <div id="postPanel"></div>
+        <div id="contactBar" v-show="isContactBarShow">
+            <button @click="followSwitch">{{ btnText }}</button>
+            <button>私信</button>
+        </div>
         <title-bar :backImgPath="require('@/assets/img/common/left_w.svg')" :menuImgPath="require('@/assets/img/common/menu_w.svg')" title="" titleColor="#fafafa" bgColor="rgba(255, 126, 103, 0)" :isShadow="false"></title-bar>
     </div>
 </template>
 
 <script>
 import { getInfo } from '@/network/sundries';
+import { getFollowRelation, changeFollowRelation } from '@/network/profile';
 import TitleBar from '@/components/common/TitleBar';
 export default {
     name: 'IndividualSpace',
@@ -27,13 +35,16 @@ export default {
     },
     data () {
         return {
+            targetInfo: {},
             avatarUrl: '',
-            username: '',
+            username: 'ddddd',
             gender: '',
             level: 0,
             followNum: 0,
             fanNum: 0,
-            intro: '这个人什么都没有写ε=ε=ε=(~￣▽￣)~'
+            intro: '这个人什么都没有写ε=ε=ε=(~￣▽￣)~',
+            isFollow: false,
+            isContactBarShow: false
         }
     },
     computed: {
@@ -45,33 +56,79 @@ export default {
             } else {
                 return require('@/assets/img/common/question_w.svg');
             }
+        },
+        btnText () {
+            return this.isFollow ? '取消关注' : '关注';
         }
     },
     watch: {
         
     },
     methods: {
-    
+        followSwitch () {
+            let _this = this;
+            this.$store.commit('setIsLoading', true);
+            if (this.isFollow) {
+                changeFollowRelation({aod: false, follower: this.$store.state.userInfo._id, followee: this.targetInfo._id}).then(res => {
+                    _this.$store.commit('setIsLoading', false);
+                    if (res.isOk) {
+                        _this.isFollow = false;
+                        // 更新被关注者的粉丝数和关注者的关注数
+                        _this.fanNum = res.followee_fanNum;
+                        let newUserInfo = _this.$store.state.userInfo;
+                        newUserInfo.followNum = res.follower_followNum;
+                        _this.$store.commit('setUserInfo', newUserInfo);
+                    } else {
+                        _this.$tinyToast({content: 'Unfollow failed! (unknown error)', duration: 2000});
+                    }
+                });
+            } else {
+                changeFollowRelation({aod: true, follower: this.$store.state.userInfo._id, followee: this.targetInfo._id}).then(res => {
+                    _this.$store.commit('setIsLoading', false);
+                    if (res.isOk) {
+                        _this.isFollow = true;
+                        // 更新粉丝数
+                        _this.fanNum = res.followee_fanNum;
+                        let newUserInfo = _this.$store.state.userInfo;
+                        newUserInfo.followNum = res.follower_followNum;
+                        _this.$store.commit('setUserInfo', newUserInfo);
+                    } else {
+                        _this.$tinyToast({content: 'Follow failed! (unknown error)', duration: 2000});
+                    }
+                });
+            }
+        }
     },
     created () {
         let _this = this;
         this.$store.commit('setIsLoading', true);
         let targetName = this.$route.params.targetName;
-        let targetInfo = {};
         getInfo(targetName).then(res => {
-            this.$store.commit('setIsLoading', false);
-            targetInfo = res;
-            _this.avatarUrl = targetInfo.avatarUrl;
-            _this.username = targetInfo.username;
-            _this.gender = targetInfo.gender;
-            _this.level = targetInfo.level;
-            _this.followNum = targetInfo.followNum;
-            _this.fanNum = targetInfo.fanNum;
-            if (targetInfo.intro == '') {
+            _this.targetInfo = res;
+            _this.avatarUrl = _this.targetInfo.avatarUrl;
+            _this.username = _this.targetInfo.username;
+            _this.gender = _this.targetInfo.gender;
+            _this.level = _this.targetInfo.level;
+            _this.followNum = _this.targetInfo.followNum;
+            _this.fanNum = _this.targetInfo.fanNum;
+            if (_this.targetInfo.intro == '') {
                 _this.intro = '这个人啥都没写ε=ε=ε=(~￣▽￣)~';
             } else {
-                _this.intro = targetInfo.intro;
+                _this.intro = _this.targetInfo.intro;
             }
+            // 如果是访问自己的个人空间则不显示contactBar
+            if (_this.targetInfo.username != _this.$store.state.userInfo.username) {
+                _this.isContactBarShow = true;
+            }
+            // 判断该用户自己是否关注
+            getFollowRelation({follower: this.$store.state.userInfo._id, followee: this.targetInfo._id}).then(res => {
+                if (res) {
+                    _this.isFollow = true;
+                } else {
+                    _this.isFollow = false;
+                }
+                this.$store.commit('setIsLoading', false);
+            });
         });
     }
 }
@@ -125,15 +182,24 @@ p {
     align-items: center;
 
     margin-top: 15px;
-    font-size: 17px;
+}
+
+#infoPanel div:nth-child(2) p {
+    margin: 0;
+    padding: 1px 0px 1px 0px;
+    
+    font-size: 18px;
     font-weight: bold;
+    max-width: 205px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #infoPanel div:nth-child(2) img {
     width: 17px;
     height: 17px;
     padding: 1px;
-    margin-left: 6px;
+    margin-left: 10px;
     border: 0.5px solid #fafafa;
     border-radius: 100%;
     background-color: rgba(255, 126, 103, 1);
@@ -161,5 +227,34 @@ p {
 
 #postPanel {
     margin-top: 20px;
+}
+
+#contactBar {
+    position: fixed;
+    bottom: 0;
+
+    display: flex;
+
+    width: 100%;
+    height: 46px;
+    background-color: #fff;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+#contactBar button {
+    flex: 1;
+    outline: none;
+    border: none;
+
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #fafafa;
+    font-size: 16px;
+    color: #909399;
+}
+
+#contactBar button:nth-child(1) {
+    border-right: 1.5px solid rgba(0, 0, 0, 0.1);
 }
 </style>

@@ -15,3 +15,27 @@ export function changeInfo(formData) {
         data: formData
     });
 }
+
+export function getFollowRelation(relation) {
+    return request({
+        method: 'get',
+        url: '/getFollowRelation',
+        params: {
+            follower: relation.follower,
+            followee: relation.followee
+        }
+    });
+}
+
+export function changeFollowRelation(relation) {
+    return request({
+        method: 'get',
+        url: '/changeFollowRelation',
+        params: {
+            // aod: true为增添，delete为删除
+            aod: relation.aod,
+            follower: relation.follower,
+            followee: relation.followee
+        }
+    });
+}

@@ -20,10 +20,10 @@ export default {
         }
     },
     methods: {
-        // skipin () {
-        //     this.$store.commit('setIsLogin', true);
-        //     this.$router.replace('/main/chat');
-        // },
+        skipin () {
+            this.$store.commit('setIsLogin', true);
+            this.$router.replace('/main/chat');
+        },
     },
     created () {
 
