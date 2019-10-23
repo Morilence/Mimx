@@ -37,7 +37,7 @@
             <hr>
             <li>
                 <p><span>简介 :</span></p>
-                <textarea placeholder="简单介绍一下你自己吧！" v-model="intro" :readonly="isEdit ? false:'readonly'" maxlength="60"></textarea>
+                <textarea placeholder="简单介绍一下你自己吧！" v-model="intro" :readonly="isEdit ? false:'readonly'" maxlength="100"></textarea>
             </li>
         </ul>
         <title-bar :backImgPath="require('@/assets/img/common/left_w.svg')" :menuImgPath="editImgUrl" title="基本资料" titleColor="#fafafa" bgColor="rgba(255, 126, 103, 1)" :isShadow="true" @onReact="judgeReact"></title-bar>
@@ -210,7 +210,7 @@ li textarea {
     transform: translateX(-50%);
 
     width: 100%;
-    height: 90px;
+    height: 100px;
     overflow-y: visible;
     padding: 5px 15px 5px 15px;
     border: none;

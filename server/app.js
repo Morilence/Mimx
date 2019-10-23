@@ -114,6 +114,44 @@ router
         // 把新的粉丝数返回以便更新
         ctx.body = {isOk: true, followee_fanNum: followee_fanNum, follower_followNum: follower_followNum};
     })
+    .get('/getFollowList', async ctx => {
+        let followIDList = [];
+        let followList = [];
+        await DB.find('follow_relation', {'follower': ctx.query.id}, {'followee': 1}).then(res => {
+            followIDList = res;
+        });
+        if (followIDList.length == 0) {
+            ctx.body = [];
+        } else {
+            for (let i=0; i<followIDList.length; i++) {
+                let fe = followIDList[i].followee;
+                followIDList[i] = { '_id': ObjectId(fe) };
+            }
+            await DB.find('users', { $or: followIDList }).then(res => {
+                followList = res;
+                ctx.body = followList;
+            });
+        }
+    })
+    .get('/getFanList', async ctx => {
+        let fanIDList = [];
+        let fanList = [];
+        await DB.find('follow_relation', {'followee': ctx.query.id}, {'follower': 1}).then(res => {
+            fanIDList = res;
+        });
+        if (fanIDList.length == 0) {
+            ctx.body = [];
+        } else {
+            for (let i=0; i<fanIDList.length; i++) {
+                let fr = fanIDList[i].follower;
+                fanIDList[i] = { '_id': ObjectId(fr) };
+            }
+            await DB.find('users', { $or: fanIDList }).then(res => {
+                fanList = res;
+                ctx.body = fanList;
+            });
+        }
+    })
     .post('/changeAvatar', async ctx => {
         let avrData = ctx.request.body;
         let file = ctx.request.files.avatar; // 获取上传文件

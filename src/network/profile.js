@@ -39,3 +39,23 @@ export function changeFollowRelation(relation) {
         }
     });
 }
+
+export function getFollowList(_id) {
+    return request({
+        method: 'get',
+        url: '/getFollowList',
+        params: {
+            id: _id
+        }
+    });
+}
+
+export function getFanList(_id) {
+    return request({
+        method: 'get',
+        url: '/getFanList',
+        params: {
+            id: _id
+        }
+    });
+}

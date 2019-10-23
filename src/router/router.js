@@ -22,6 +22,9 @@ const Sponsor = () => import('@/views/Options/Sponsor/Sponsor');
 const Sundries = () => import('@/views/Sundries/Sundries');
 const FindUser = () => import('@/views/Sundries/FindUser/FindUser');
 const Write = () => import('@/views/Sundries/Write/Write');
+const FollowList = () => import('@/views/Sundries/FollowList/FollowList');
+const CollectList = () => import('@/views/Sundries/CollectList/CollectList');
+const FanList = () => import('@/views/Sundries/FanList/FanList');
 
 Vue.use(Router)
 
@@ -89,7 +92,7 @@ export default new Router({
 			component: Profile,
 			meta: {
 				requireAuth: true,
-				keepAlive: true
+				keepAlive: false
 			}
 		},
 		{
@@ -110,6 +113,18 @@ export default new Router({
 				{
 					path: 'write',
 					component: Write
+				},
+				{
+					path: 'followList',
+					component: FollowList
+				},
+				{
+					path: 'collectList',
+					component: CollectList
+				},
+				{
+					path: 'fanList',
+					component: FanList
 				}
 			]
 		},

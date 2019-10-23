@@ -13,15 +13,15 @@
                 <p>{{ issueNum }}</p>
                 <p>发布</p>
             </li>|
-            <li>
+            <li @click="showList('/sundries/followList')">
                 <p>{{ followNum }}</p>
                 <p>关注</p>
             </li>|
-            <li>
+            <li @click="showList('/sundries/collectList')">
                 <p>{{ collectNum }}</p>
                 <p>收藏</p>
             </li>|
-            <li>
+            <li @click="showList('/sundries/fanList')">
                 <p>{{ fanNum }}</p>
                 <p>粉丝</p>
             </li>
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import { getInfo } from '@/network/sundries';
 import { changeAvatar } from '@/network/profile';
 import { compress, dataURLtoFile } from '@/common/utils';
 export default {
@@ -40,7 +41,7 @@ export default {
     data () {
         return {
             avatarUrl: '',
-            username: '未登录',
+            username: '',
             level: 0,
             issueNum: 0,
             followNum: 0,
@@ -117,52 +118,40 @@ export default {
                 this.$tinyToast({content: 'Upload successfully.', duration: 2000});
                 console.log('Upload successfully: ', _this.avatarUrl);
             });
+        },
+        showList (path) {
+            this.$router.push(path);
         }
     },
     computed: {
-        isLogin () {
-            return this.$store.state.isLogin;
-        }
+        
     },
     watch: {
-        isLogin () {
-            if (this.$store.state.isLogin == true) {
-                this.username = this.$store.state.userInfo.username;
-                this.level = this.$store.state.userInfo.level;
-                this.issueNum = this.$store.state.userInfo.issueNum;
-                this.followNum = this.$store.state.userInfo.followNum;
-                this.collectNum = this.$store.state.userInfo.collectNum;
-                this.fanNum = this.$store.state.userInfo.fanNum;
-            } else {
-                this.avatarUrl = require('@/assets/img/common/visitor.svg');
-                this.username = '未登录';
-                this.level = 0;
-                this.issueNum = 0;
-                this.followNum = 0;
-                this.collectNum = 0;
-                this.fanNum = 0;
-            }
-        }
+    
     },
     created () {
-        // 需要提前就把数据加载好，因为watch还没开始监听
-        if (this.$store.state.isLogin == true) {
-            this.username = this.$store.state.userInfo.username;
-            this.avatarUrl = this.$store.state.userInfo.avatarUrl;
-            this.level = this.$store.state.userInfo.level;
-            this.issueNum = this.$store.state.userInfo.issueNum;
-            this.followNum = this.$store.state.userInfo.followNum;
-            this.collectNum = this.$store.state.userInfo.collectNum;
-            this.fanNum = this.$store.state.userInfo.fanNum;
-        } else {
-            this.username = '未登录';
-            this.avatarUrl = require('@/assets/img/common/visitor.svg');
-            this.level = 0;
-            this.issueNum = 0;
-            this.followNum = 0;
-            this.collectNum = 0;
-            this.fanNum = 0;
-        }
+        let _this = this;
+        this.$store.commit('setIsLoading', true);
+        // 先拿第一次获取的userInfo进行预加载
+        this.username = this.$store.state.userInfo.username;
+        this.avatarUrl = this.$store.state.userInfo.avatarUrl;
+        this.level = this.$store.state.userInfo.level;
+        this.issueNum = this.$store.state.userInfo.issueNum;
+        this.followNum = this.$store.state.userInfo.followNum;
+        this.collectNum = this.$store.state.userInfo.collectNum;
+        this.fanNum = this.$store.state.userInfo.fanNum;
+        // 每次打开NameCard都进行信息更新
+        getInfo(this.$store.state.userInfo.username).then(res => {
+            _this.$store.commit('setIsLoading', false);
+            _this.$store.commit('setUserInfo', res);
+            _this.username = _this.$store.state.userInfo.username;
+            _this.avatarUrl = _this.$store.state.userInfo.avatarUrl;
+            _this.level = _this.$store.state.userInfo.level;
+            _this.issueNum = _this.$store.state.userInfo.issueNum;
+            _this.followNum = _this.$store.state.userInfo.followNum;
+            _this.collectNum = _this.$store.state.userInfo.collectNum;
+            _this.fanNum = _this.$store.state.userInfo.fanNum;
+        });
     }
 }
 </script>
